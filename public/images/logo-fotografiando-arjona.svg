@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="154" viewBox="0 0 720 154" role="img" aria-labelledby="title desc">
+  <title id="title">Fotografiando Arjona, propuesta de logo 2</title>
+  <desc id="desc">Monograma A de Arjona con una cámara fotográfica de líneas doradas en su interior, junto al nombre de la web.</desc>
+  <defs>
+    <linearGradient id="oro" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#edc798"/>
+      <stop offset="1" stop-color="#b88955"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#oro)" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M27 126 78 22l51 104" stroke-width="7"/>
+    <path d="M49 88h58" stroke-width="5"/>
+    <path d="M56 102q0-3 3-3h7l4-7h15l4 7h5q3 0 3 3v17q0 3-3 3H59q-3 0-3-3Z" fill="#14211e" stroke-width="3"/>
+    <path d="M70 92h14v7H70z" fill="#14211e" stroke-width="2.5"/>
+    <circle cx="78" cy="110" r="9" fill="#14211e" stroke-width="2.5"/>
+    <circle cx="78" cy="110" r="5.5" stroke-width="1.8"/>
+    <circle cx="78" cy="110" r="2" fill="#edc798" stroke="none"/>
+    <rect x="87" y="102" width="5" height="3" rx="1" fill="#edc798" stroke="none"/>
+    <path d="M60 121h6m24-16v9" stroke-width="1.5" opacity=".8"/>
+  </g>
+  <path d="M18 136h120" stroke="#d1ac7c" stroke-width="1" opacity=".55"/>
+  <g fill="#f2eddf">
+    <text x="169" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="43" letter-spacing="1.1">Fotografiando</text>
+    <text x="171" y="113" font-family="'Segoe UI', Arial, sans-serif" font-size="23" font-weight="600" letter-spacing="8" fill="#d1ac7c">ARJONA</text>
+  </g>
+</svg>

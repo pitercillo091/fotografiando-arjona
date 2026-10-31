@@ -1,0 +1,9 @@
+node_modules/
+_site/
+.DS_Store
+Thumbs.db
+/GALERIA DE FOTOS/
+/archive/
+/assets/propuestas/
+/public/contact-*.jpg
+/AUDITORIA_PRIMER_BORRADOR.md
