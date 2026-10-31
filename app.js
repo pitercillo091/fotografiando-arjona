@@ -65,9 +65,8 @@ function renderGallery(filter = 'all', append = false) {
   $('#gallery-more').hidden = visible.length >= matches.length;
   const gallerySizes = '(max-width: 800px) 48vw, (max-width: 1200px) 50vw, 42vw';
   grid.insertAdjacentHTML('beforeend', visible.slice(start).map((photo, offset) => {
-    const index = start + offset;
-    const priority = index < 4;
-    return `<article class="gallery-card" style="--ratio:${photo.width}/${photo.height}"><button type="button" data-photo="${photo.id}" aria-label="Ampliar ${photoAlt(photo)}"><figure><picture><source srcset="${responsiveSources(photo)}" sizes="${gallerySizes}" media="(min-width: 1px)"><img src="${imagePath(photo)}" srcset="${responsiveSources(photo)}" sizes="${gallerySizes}" alt="${photoAlt(photo)}" width="${photo.width}" height="${photo.height}" loading="${priority ? 'eager' : 'lazy'}"${index === 0 ? ' fetchpriority="high"' : ''} decoding="async"></picture><figcaption><span>${labels[photo.category]}</span>${photo.caption || photoTitle(photo)}</figcaption></figure></button></article>`;
+    const priority = offset < 4;
+    return `<article class="gallery-card" style="--ratio:${photo.width}/${photo.height}"><button type="button" data-photo="${photo.id}" aria-label="Ampliar ${photoAlt(photo)}"><figure><picture><source srcset="${responsiveSources(photo)}" sizes="${gallerySizes}" media="(min-width: 1px)"><img src="${imagePath(photo)}" srcset="${responsiveSources(photo)}" sizes="${gallerySizes}" alt="${photoAlt(photo)}" width="${photo.width}" height="${photo.height}" loading="${priority ? 'eager' : 'lazy'}"${offset === 0 ? ' fetchpriority="high"' : ''} decoding="async"></picture><figcaption><span>${labels[photo.category]}</span>${photo.caption || photoTitle(photo)}</figcaption></figure></button></article>`;
   }).join(''));
   renderedPhotoCount = visible.length;
   grid.querySelectorAll('[data-photo]:not([data-bound])').forEach((button) => {
@@ -110,6 +109,15 @@ $('#gallery-more').addEventListener('click', () => { galleryLimit += galleryPage
 document.querySelectorAll('[data-filter-link]').forEach((link) => link.addEventListener('click', () => { const target = $(`.filter[data-filter="${link.dataset.filterLink}"]`); target?.click(); }));
 const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); } }), {threshold: .02});
 document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+function revealHashTarget() {
+  const target = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
+  if (target?.classList.contains('reveal')) {
+    target.classList.add('is-visible');
+    revealObserver.unobserve(target);
+  }
+}
+window.addEventListener('hashchange', revealHashTarget);
+revealHashTarget();
 
 renderStory(); renderGallery();
 const hashPhoto = location.hash.startsWith('#foto=') ? location.hash.slice(6) : '';
