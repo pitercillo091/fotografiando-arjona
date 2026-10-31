@@ -111,10 +111,12 @@ const revealObserver = new IntersectionObserver((entries) => entries.forEach((en
 document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
 function revealHashTarget() {
   const target = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
-  if (target?.classList.contains('reveal')) {
+  if (!target) return;
+  if (target.classList.contains('reveal')) {
     target.classList.add('is-visible');
     revealObserver.unobserve(target);
   }
+  requestAnimationFrame(() => target.scrollIntoView({behavior: 'instant', block: 'start'}));
 }
 window.addEventListener('hashchange', revealHashTarget);
 revealHashTarget();
