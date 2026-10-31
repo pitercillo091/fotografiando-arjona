@@ -12,6 +12,7 @@ let scrollFrame = 0;
 const galleryPageSize = 30;
 let galleryFilter = 'all';
 let galleryLimit = galleryPageSize;
+let renderedPhotoCount = 0;
 
 function photoAlt(photo) { return photo.alt || `Fotografía de Arjona, Jaén. ${photo.caption || 'Descripción pendiente de identificación visual'}.`; }
 function photoTitle(photo) { return photo.titleText || `Arjona · Fotografía ${photo.id.slice(-3)}`; }
@@ -50,15 +51,29 @@ function renderStory() {
   window.addEventListener('scroll', () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(updateStoryFromScroll); }, {passive: true});
 }
 
-function renderGallery(filter = 'all') {
+function renderGallery(filter = 'all', append = false) {
   const grid = $('#gallery-grid');
-  galleryFilter = filter;
   const matches = filter === 'all' ? photos : photos.filter((photo) => photo.category === filter);
   const visible = matches.slice(0, galleryLimit);
+  const start = append ? renderedPhotoCount : 0;
+  galleryFilter = filter;
+  if (!append) {
+    grid.replaceChildren();
+    renderedPhotoCount = 0;
+  }
   $('#gallery-count').textContent = `Mostrando ${visible.length} de ${matches.length} fotografías`;
   $('#gallery-more').hidden = visible.length >= matches.length;
-  grid.innerHTML = visible.map((photo) => `<article class="gallery-card" style="--ratio:${photo.width}/${photo.height}"><button type="button" data-photo="${photo.id}" aria-label="Ampliar ${photoAlt(photo)}"><figure><picture><source srcset="${responsiveSources(photo)}" media="(min-width: 1px)"><img src="${imagePath(photo)}" srcset="${responsiveSources(photo)}" sizes="(max-width: 800px) 48vw, (max-width: 1200px) 33vw, 25vw" alt="${photoAlt(photo)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async"></picture><figcaption><span>${labels[photo.category]}</span>${photo.caption || photoTitle(photo)}</figcaption></figure></button></article>`).join('');
-  grid.querySelectorAll('[data-photo]').forEach((button) => button.addEventListener('click', () => { const index = photos.findIndex((item) => item.id === button.dataset.photo); openPhotoAt(index, button); }));
+  const gallerySizes = '(max-width: 800px) 48vw, (max-width: 1200px) 50vw, 42vw';
+  grid.insertAdjacentHTML('beforeend', visible.slice(start).map((photo, offset) => {
+    const index = start + offset;
+    const priority = index < 4;
+    return `<article class="gallery-card" style="--ratio:${photo.width}/${photo.height}"><button type="button" data-photo="${photo.id}" aria-label="Ampliar ${photoAlt(photo)}"><figure><picture><source srcset="${responsiveSources(photo)}" sizes="${gallerySizes}" media="(min-width: 1px)"><img src="${imagePath(photo)}" srcset="${responsiveSources(photo)}" sizes="${gallerySizes}" alt="${photoAlt(photo)}" width="${photo.width}" height="${photo.height}" loading="${priority ? 'eager' : 'lazy'}"${index === 0 ? ' fetchpriority="high"' : ''} decoding="async"></picture><figcaption><span>${labels[photo.category]}</span>${photo.caption || photoTitle(photo)}</figcaption></figure></button></article>`;
+  }).join(''));
+  renderedPhotoCount = visible.length;
+  grid.querySelectorAll('[data-photo]:not([data-bound])').forEach((button) => {
+    button.dataset.bound = 'true';
+    button.addEventListener('click', () => { const index = photos.findIndex((item) => item.id === button.dataset.photo); openPhotoAt(index, button); });
+  });
 }
 
 function openPhotoAt(index, focusTarget = null, updateUrl = true) {
@@ -91,9 +106,9 @@ $('#lightbox-media').addEventListener('touchstart', (event) => { touchStartX = e
 $('#lightbox-media').addEventListener('touchend', (event) => { const delta = event.changedTouches[0].clientX - touchStartX; if (Math.abs(delta) > 50) stepPhoto(delta < 0 ? 1 : -1); }, {passive: true});
 
 document.querySelectorAll('.filter').forEach((button) => button.addEventListener('click', () => { document.querySelectorAll('.filter').forEach((item) => { item.classList.remove('is-active'); item.removeAttribute('aria-current'); }); button.classList.add('is-active'); button.setAttribute('aria-current', 'page'); galleryLimit = galleryPageSize; renderGallery(button.dataset.filter); }));
-$('#gallery-more').addEventListener('click', () => { galleryLimit += galleryPageSize; renderGallery(galleryFilter); });
+$('#gallery-more').addEventListener('click', () => { galleryLimit += galleryPageSize; renderGallery(galleryFilter, true); });
 document.querySelectorAll('[data-filter-link]').forEach((link) => link.addEventListener('click', () => { const target = $(`.filter[data-filter="${link.dataset.filterLink}"]`); target?.click(); }));
-const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); } }), {threshold: .14});
+const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); } }), {threshold: .02});
 document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
 
 renderStory(); renderGallery();

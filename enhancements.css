@@ -35,3 +35,5 @@ h1,h2,.hero-lead,.story-caption strong,.story-caption>span,.bento-card strong,.c
 .brand{display:block;flex:none;width:250px;line-height:0}.brand-logo{display:block;width:100%;height:auto;max-height:56px;object-fit:contain;object-position:left center}
 @media(max-width:800px){.brand{width:clamp(150px,48vw,188px)}.brand-logo{max-height:42px}}
 .hero-backdrop{background-image:url('images/bc035b34f6363d0e.jpg')}
+
+.gallery-card{content-visibility:visible;contain-intrinsic-size:none}
