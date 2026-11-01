@@ -145,6 +145,18 @@ musicToggle.addEventListener('click', async () => {
 music.addEventListener('play', updateMusicControl);
 music.addEventListener('pause', updateMusicControl);
 music.addEventListener('volumechange', updateMusicControl);
+async function startMusicAfterGesture(event) {
+  if (event.target === musicToggle || (!music.paused && !music.muted)) return;
+  music.muted = false;
+  try {
+    await music.play();
+    document.removeEventListener('pointerdown', startMusicAfterGesture, true);
+    document.removeEventListener('keydown', startMusicAfterGesture, true);
+    updateMusicControl();
+  } catch { updateMusicControl(); }
+}
+document.addEventListener('pointerdown', startMusicAfterGesture, true);
+document.addEventListener('keydown', startMusicAfterGesture, true);
 music.play().then(updateMusicControl).catch(() => {
   musicToggle.textContent = 'Activar música';
   musicToggle.setAttribute('aria-label', 'Activar música');
