@@ -124,3 +124,28 @@ revealHashTarget();
 renderStory(); renderGallery();
 const hashPhoto = location.hash.startsWith('#foto=') ? location.hash.slice(6) : '';
 if (hashPhoto) { const index = photos.findIndex((photo) => photo.id === hashPhoto); if (index >= 0) openPhotoAt(index, null, false); }
+
+const music = $('#site-music');
+const musicToggle = $('#music-toggle');
+function updateMusicControl() {
+  const playing = !music.paused && !music.muted;
+  musicToggle.textContent = playing ? 'Silenciar música' : 'Activar música';
+  musicToggle.setAttribute('aria-label', playing ? 'Silenciar música' : 'Activar música');
+  musicToggle.setAttribute('aria-pressed', String(!playing));
+}
+musicToggle.addEventListener('click', async () => {
+  if (music.paused || music.muted) {
+    music.muted = false;
+    try { await music.play(); } catch { musicToggle.textContent = 'No se pudo reproducir'; }
+  } else {
+    music.muted = true;
+  }
+  updateMusicControl();
+});
+music.addEventListener('play', updateMusicControl);
+music.addEventListener('pause', updateMusicControl);
+music.addEventListener('volumechange', updateMusicControl);
+music.play().then(updateMusicControl).catch(() => {
+  musicToggle.textContent = 'Activar música';
+  musicToggle.setAttribute('aria-label', 'Activar música');
+});

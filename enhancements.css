@@ -38,3 +38,4 @@ h1,h2,.hero-lead,.story-caption strong,.story-caption>span,.bento-card strong,.c
 
 .gallery-card{content-visibility:visible;contain-intrinsic-size:none}
 html{scroll-behavior:auto}
+.music-toggle{position:fixed;right:22px;bottom:20px;z-index:15;padding:10px 14px;border:1px solid var(--line);background:rgba(13,23,21,.92);color:var(--paper);font:12px/1.2 var(--sans);cursor:pointer}.music-toggle:hover,.music-toggle:focus-visible{border-color:var(--gold);color:var(--bright)}@media(max-width:800px){.music-toggle{right:12px;bottom:12px;min-height:44px}}
