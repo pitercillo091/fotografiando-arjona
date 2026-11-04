@@ -3,6 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "scripts": {"start": "node scripts/serve.mjs", "check": "node --check app.js && node --check data/photos.js && node --check data/quiz.js"},
+  "scripts": {"start": "node scripts/serve.mjs", "check": "node --check app.js && node --check data/photos.js && node --check data/quiz.js && node --check data/agenda.js"},
   "engines": {"node": ">=20"}
 }

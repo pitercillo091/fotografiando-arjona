@@ -1,5 +1,6 @@
 import { photos } from './data/photos.js';
 import { quizQuestions } from './data/quiz.js';
+import { agendaEvents } from './data/agenda.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const imagePath = (photo) => `images/${photo.file.toLowerCase().endsWith('.avif') ? `optimized/${photo.file.replace(/\.avif$/i, '')}-fallback.jpg` : photo.file}`;
@@ -241,3 +242,52 @@ function startQuiz() {
 quizStart.addEventListener('click', startQuiz);
 quizNext.addEventListener('click', () => { if (quizState.index === quizQuestions.length - 1) finishQuiz(); else { quizState.index += 1; renderQuizQuestion(); $('#quiz-question').focus?.({preventScroll: true}); } });
 $('#quiz-restart').addEventListener('click', () => { quizResult.hidden = true; quizStart.closest('.quiz-intro').hidden = false; quizStart.focus(); });
+
+const agendaCategoryLabels = {cultura: 'Cultura', patrimonio: 'Patrimonio', musica: 'Música', literatura: 'Literatura', gastronomia: 'Gastronomía', olivar: 'Olivar', tradicion: 'Tradición'};
+const agendaStatusLabels = {confirmado: 'Confirmado', recurrente: 'Recurrente', 'fecha-tradicional': 'Fecha tradicional', 'pendiente-confirmar': 'Pendiente de confirmar', cancelado: 'Cancelado'};
+let agendaFilter = 'all';
+
+function agendaDate(date) {
+  return new Intl.DateTimeFormat('es-ES', {day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Madrid'}).format(new Date(`${date}T12:00:00`));
+}
+
+function agendaDateLabel(event) {
+  if (event.dateLabel) return event.dateLabel;
+  const start = agendaDate(event.dateStart);
+  return event.dateEnd ? `${start} — ${agendaDate(event.dateEnd)}` : start;
+}
+
+function agendaMonthLabel(month) {
+  const label = new Intl.DateTimeFormat('es-ES', {month: 'long', year: 'numeric', timeZone: 'Europe/Madrid'}).format(new Date(`${month}-01T12:00:00`));
+  return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
+function escapeAgenda(value) {
+  return String(value).replace(/[&<>'"]/g, (character) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[character]));
+}
+
+function renderAgenda(filter = agendaFilter) {
+  const list = $('#agenda-list');
+  if (!list) return;
+  agendaFilter = filter;
+  const events = agendaEvents.filter((event) => filter === 'all' || event.category === filter).sort((a, b) => a.dateStart.localeCompare(b.dateStart));
+  const groups = events.reduce((result, event) => { const month = event.dateStart.slice(0, 7); (result[month] ||= []).push(event); return result; }, {});
+  list.replaceChildren();
+  Object.entries(groups).forEach(([month, monthEvents]) => {
+    const monthSection = document.createElement('section'); monthSection.className = 'agenda-month'; monthSection.setAttribute('aria-labelledby', `agenda-month-${month}`);
+    const heading = document.createElement('h3'); heading.id = `agenda-month-${month}`; heading.textContent = agendaMonthLabel(month); monthSection.append(heading);
+    const grid = document.createElement('div'); grid.className = 'agenda-events';
+    monthEvents.forEach((event) => {
+      const photo = event.image ? photos.find((item) => item.file === event.image) : null;
+      const article = document.createElement('article'); article.className = `agenda-event${event.featured ? ' is-featured' : ''}`;
+      const media = photo ? `<img src="${imagePath(photo)}" srcset="${responsiveSources(photo)}" sizes="(max-width: 800px) 92vw, 34vw" alt="${escapeAgenda(event.alt)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async">` : '<div class="agenda-art" aria-hidden="true">ARJONA</div>';
+      article.innerHTML = `<div class="agenda-media">${media}</div><div class="agenda-event-body"><div class="agenda-event-top"><span class="agenda-date">${escapeAgenda(agendaDateLabel(event))}</span><span class="agenda-status status-${escapeAgenda(event.status)}">${escapeAgenda(agendaStatusLabels[event.status] || event.status)}</span></div><p class="agenda-category">${escapeAgenda(agendaCategoryLabels[event.category] || event.category)}</p><h4>${escapeAgenda(event.title)}</h4><p class="agenda-description">${escapeAgenda(event.description)}</p><p class="agenda-location">${escapeAgenda(event.time ? `${event.time} · ${event.location}` : event.location)}</p><a class="agenda-source" href="${escapeAgenda(event.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fuente y más información <span aria-hidden="true">↗</span></a></div>`;
+      grid.append(article);
+    });
+    monthSection.append(grid); list.append(monthSection);
+  });
+  if (!events.length) { const empty = document.createElement('p'); empty.className = 'agenda-empty'; empty.textContent = 'No hay actividades publicadas para esta categoría en el periodo consultado.'; list.append(empty); }
+}
+
+document.querySelectorAll('.agenda-filter').forEach((button) => button.addEventListener('click', () => { document.querySelectorAll('.agenda-filter').forEach((item) => { item.classList.remove('is-active'); item.removeAttribute('aria-current'); }); button.classList.add('is-active'); button.setAttribute('aria-current', 'page'); renderAgenda(button.dataset.agendaFilter); }));
+renderAgenda();

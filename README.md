@@ -43,3 +43,11 @@ Las preguntas están en `data/quiz.js`. Cada entrada necesita:
 Para añadir una pregunta, copia una entrada de `data/quiz.js`, cambia el `id`, selecciona una fotografía revisada y comprueba que la respuesta pueda defenderse con la imagen o con la fuente enlazada. El sistema mezcla las opciones de forma determinista, muestra una pregunta cada vez y precarga solo la imagen que corresponde al estado actual.
 
 Después de editar, ejecuta `npm run check` y abre `http://localhost:4173/`. La sección aparece en `#juego` y también está enlazada desde la navegación superior.
+
+## Agenda
+
+Los eventos están centralizados en `data/agenda.js`. Cada entrada incluye título, fechas, hora cuando se conoce, lugar, categoría, estado, descripción, fotografía opcional y fuente. Los estados disponibles son `confirmado`, `recurrente`, `fecha-tradicional`, `pendiente-confirmar` y `cancelado`.
+
+Para actualizar la agenda, modifica únicamente ese archivo y conserva las fechas en formato `AAAA-MM-DD`. Usa `dateLabel` cuando la fuente solo publique un mes o un periodo aproximado. No marques como `confirmado` un evento cuya fecha exacta todavía no esté publicada. La sección agrupa automáticamente los eventos por mes, ordena las fechas y genera los filtros según las categorías disponibles.
+
+Fiestasantos 2027 está guardada como `fecha-tradicional` porque la fuente consultada documenta el periodo anual y el día principal tradicional, pero el programa específico de 2027 aún no está publicado. Cuando aparezca, sustituye sus fechas, descripción y fuente en `data/agenda.js` y cambia el estado a `confirmado` únicamente si existe una publicación oficial.
