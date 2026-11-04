@@ -1,6 +1,8 @@
 import { photos } from './data/photos.js';
 import { quizQuestions } from './data/quiz.js';
 import { agendaEvents } from './data/agenda.js';
+import { agendaArchive } from './data/agenda.js';
+import { photoStories } from './data/stories.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const imagePath = (photo) => `images/${photo.file.toLowerCase().endsWith('.avif') ? `optimized/${photo.file.replace(/\.avif$/i, '')}-fallback.jpg` : photo.file}`;
@@ -13,6 +15,7 @@ let lastFocus = null;
 let scrollFrame = 0;
 const galleryPageSize = 30;
 let galleryFilter = 'all';
+let galleryQuery = '';
 let galleryLimit = galleryPageSize;
 let renderedPhotoCount = 0;
 
@@ -55,7 +58,12 @@ function renderStory() {
 
 function renderGallery(filter = 'all', append = false) {
   const grid = $('#gallery-grid');
-  const matches = filter === 'all' ? photos : photos.filter((photo) => photo.category === filter);
+  const normalizedQuery = galleryQuery.trim().toLocaleLowerCase('es');
+  const matches = photos.filter((photo) => {
+    const categoryMatch = filter === 'all' || photo.category === filter;
+    const searchable = [photo.id, photo.file, photo.title, photo.titleText, photo.caption, photo.alt, photo.categoryLabel].filter(Boolean).join(' ').toLocaleLowerCase('es');
+    return categoryMatch && (!normalizedQuery || searchable.includes(normalizedQuery));
+  });
   const visible = matches.slice(0, galleryLimit);
   const start = append ? renderedPhotoCount : 0;
   galleryFilter = filter;
@@ -64,6 +72,7 @@ function renderGallery(filter = 'all', append = false) {
     renderedPhotoCount = 0;
   }
   $('#gallery-count').textContent = `Mostrando ${visible.length} de ${matches.length} fotografías`;
+  $('#photo-search-count').textContent = normalizedQuery ? `${matches.length} resultado${matches.length === 1 ? '' : 's'}` : '';
   $('#gallery-more').hidden = visible.length >= matches.length;
   const gallerySizes = '(max-width: 800px) 48vw, (max-width: 1200px) 50vw, 42vw';
   grid.insertAdjacentHTML('beforeend', visible.slice(start).map((photo, offset) => {
@@ -107,6 +116,7 @@ $('#lightbox-media').addEventListener('touchstart', (event) => { touchStartX = e
 $('#lightbox-media').addEventListener('touchend', (event) => { const delta = event.changedTouches[0].clientX - touchStartX; if (Math.abs(delta) > 50) stepPhoto(delta < 0 ? 1 : -1); }, {passive: true});
 
 document.querySelectorAll('.filter').forEach((button) => button.addEventListener('click', () => { document.querySelectorAll('.filter').forEach((item) => { item.classList.remove('is-active'); item.removeAttribute('aria-current'); }); button.classList.add('is-active'); button.setAttribute('aria-current', 'page'); galleryLimit = galleryPageSize; renderGallery(button.dataset.filter); }));
+$('#photo-search-input').addEventListener('input', (event) => { galleryQuery = event.target.value; galleryLimit = galleryPageSize; renderGallery(galleryFilter); });
 $('#gallery-more').addEventListener('click', () => { galleryLimit += galleryPageSize; renderGallery(galleryFilter, true); });
 document.querySelectorAll('[data-filter-link]').forEach((link) => link.addEventListener('click', () => { const target = $(`.filter[data-filter="${link.dataset.filterLink}"]`); target?.click(); }));
 const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); } }), {threshold: .02});
@@ -124,6 +134,21 @@ window.addEventListener('hashchange', revealHashTarget);
 revealHashTarget();
 
 renderStory(); renderGallery();
+
+function renderPhotoStories() {
+  const container = $('#story-cards');
+  if (!container) return;
+  container.innerHTML = photoStories.map((story) => {
+    const storyPhotos = story.photoIds.map((id) => photos.find((photo) => photo.id === id)).filter(Boolean);
+    const cover = storyPhotos[0];
+    if (!cover) return '';
+    const thumbs = storyPhotos.map((photo) => `<button type="button" class="story-thumb" data-story-photo="${photo.id}" aria-label="Ampliar ${photoTitle(photo)}"><img src="${imagePath(photo)}" alt="${photoAlt(photo)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async"></button>`).join('');
+    return `<article class="story-card"><div class="story-card-cover"><img src="${imagePath(cover)}" srcset="${responsiveSources(cover)}" sizes="(max-width: 800px) 92vw, 42vw" alt="${photoAlt(cover)}" width="${cover.width}" height="${cover.height}" loading="lazy" decoding="async"></div><div class="story-card-body"><p class="eyebrow">${story.category === 'paisaje' ? 'PAISAJE' : story.category === 'patrimonio' ? 'PATRIMONIO' : 'LUZ Y DETALLES'}</p><h3>${story.title}</h3><p>${story.intro}</p><button class="text-link story-card-link" type="button" data-story-filter="${story.category}">Ver esta línea en la galería <span aria-hidden="true">↗</span></button><div class="story-thumbs">${thumbs}</div></div></article>`;
+  }).join('');
+  container.querySelectorAll('[data-story-filter]').forEach((button) => button.addEventListener('click', () => { $(`.filter[data-filter="${button.dataset.storyFilter}"]`)?.click(); $('#galeria').scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); }));
+  container.querySelectorAll('[data-story-photo]').forEach((button) => button.addEventListener('click', () => { const index = photos.findIndex((photo) => photo.id === button.dataset.storyPhoto); openPhotoAt(index, button); }));
+}
+renderPhotoStories();
 const hashPhoto = location.hash.startsWith('#foto=') ? location.hash.slice(6) : '';
 if (hashPhoto) { const index = photos.findIndex((photo) => photo.id === hashPhoto); if (index >= 0) openPhotoAt(index, null, false); }
 
@@ -289,5 +314,15 @@ function renderAgenda(filter = agendaFilter) {
   if (!events.length) { const empty = document.createElement('p'); empty.className = 'agenda-empty'; empty.textContent = 'No hay actividades publicadas para esta categoría en el periodo consultado.'; list.append(empty); }
 }
 
+function renderAgendaArchive() {
+  const archive = $('#agenda-archive');
+  const list = $('#agenda-archive-list');
+  if (!archive || !list || !agendaArchive.length) return;
+  const groups = agendaArchive.reduce((result, event) => { const month = event.archiveMonth || event.dateStart.slice(0, 7); (result[month] ||= []).push(event); return result; }, {});
+  list.innerHTML = Object.entries(groups).sort(([a], [b]) => b.localeCompare(a)).map(([month, events]) => `<section class="agenda-archive-month"><h4>${escapeAgenda(agendaMonthLabel(month))}</h4><ul>${events.map((event) => `<li><strong>${escapeAgenda(event.title)}</strong><span>${escapeAgenda(event.dateLabel || agendaDateLabel(event))}</span></li>`).join('')}</ul></section>`).join('');
+  archive.hidden = false;
+}
+
 document.querySelectorAll('.agenda-filter').forEach((button) => button.addEventListener('click', () => { document.querySelectorAll('.agenda-filter').forEach((item) => { item.classList.remove('is-active'); item.removeAttribute('aria-current'); }); button.classList.add('is-active'); button.setAttribute('aria-current', 'page'); renderAgenda(button.dataset.agendaFilter); }));
 renderAgenda();
+renderAgendaArchive();

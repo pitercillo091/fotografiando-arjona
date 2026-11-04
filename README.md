@@ -51,3 +51,11 @@ Los eventos están centralizados en `data/agenda.js`. Cada entrada incluye títu
 Para actualizar la agenda, modifica únicamente ese archivo y conserva las fechas en formato `AAAA-MM-DD`. Usa `dateLabel` cuando la fuente solo publique un mes o un periodo aproximado. No marques como `confirmado` un evento cuya fecha exacta todavía no esté publicada. La sección agrupa automáticamente los eventos por mes, ordena las fechas y genera los filtros según las categorías disponibles.
 
 Fiestasantos 2027 está guardada como `fecha-tradicional` porque la fuente consultada documenta el periodo anual y el día principal tradicional, pero el programa específico de 2027 aún no está publicado. Cuando aparezca, sustituye sus fechas, descripción y fuente en `data/agenda.js` y cambia el estado a `confirmado` únicamente si existe una publicación oficial.
+
+## Historias y buscador
+
+Los recorridos fotográficos están centralizados en `data/stories.js`. Cada historia contiene un título, una introducción, una categoría y una lista de identificadores existentes en `data/photos.js`. Para crear otra, añade una entrada con fotografías revisadas y comprueba sus identificadores antes de publicar.
+
+El buscador de la galería trabaja en el navegador sobre los datos ya disponibles. Busca en el identificador, nombre de archivo, título, descripción, texto alternativo y categoría. No envía consultas ni fotografías a servicios externos.
+
+El archivo de agenda se prepara en `agendaArchive` dentro de `data/agenda.js`. Cada cierre mensual puede añadir allí los eventos celebrados con `archiveMonth`, manteniendo separada la agenda futura. La interfaz mostrará automáticamente los meses archivados cuando exista contenido.

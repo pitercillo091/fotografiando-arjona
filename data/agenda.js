@@ -75,3 +75,6 @@ export const agendaEvents = [
     image: '01d64a476e0ece79.jpg', alt: 'Interior de una iglesia de Arjona con las imágenes de San Bonoso y San Maximiano.', sourceLabel: 'Jaén Paraíso Interior · Fiestasantos', sourceUrl: 'https://jaenparaisointerior.es/es/w/fiestasantos', lastVerified: '2026-11-04'
   }
 ];
+
+// El automatismo mensual añade aquí los meses cerrados sin tocar la agenda futura.
+export const agendaArchive = [];

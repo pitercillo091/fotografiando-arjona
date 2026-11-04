@@ -26,7 +26,7 @@
   <header class="topbar">
     <a class="brand" href="#inicio" aria-label="Fotografiando Arjona, volver al inicio"><img class="brand-logo" src="images/logo-fotografiando-arjona.svg" alt="Fotografiando Arjona" width="720" height="154"></a>
     <nav aria-label="Secciones principales">
-      <a href="#recorrido">El recorrido</a><a href="#galeria">Galería</a><a href="#agenda">Agenda</a><a href="#juego">Aprende más</a><a href="#fuentes">Fuentes</a>
+      <a href="#recorrido">El recorrido</a><a href="#historias">Historias</a><a href="#galeria">Galería</a><a href="#agenda">Agenda</a><a href="#juego">Aprende más</a><a href="#fuentes">Fuentes</a>
     </nav>
   </header>
   <main id="main">
@@ -63,10 +63,16 @@
 
     <section class="gallery-section" id="galeria" aria-labelledby="gallery-title">
       <div class="section-heading"><div><p class="eyebrow">COLECCIÓN</p><h2 id="gallery-title">La galería se amplía<br>con cada nueva imagen.</h2></div><p class="section-description">Las fotografías se leen como un archivo vivo. El sistema reserva espacio, carga de forma diferida y conserva la orientación de cada imagen.</p></div>
+      <div class="photo-search"><label for="photo-search-input">Buscar en la colección</label><input id="photo-search-input" type="search" placeholder="Paisaje, patrimonio, luz…" autocomplete="off"><span id="photo-search-count" aria-live="polite"></span></div>
       <div class="filters" role="group" aria-label="Filtrar la galería"><button class="filter is-active" data-filter="all">Todas</button><button class="filter" data-filter="paisaje">Horizontales</button><button class="filter" data-filter="patrimonio">Verticales</button><button class="filter" data-filter="detalles">Cuadradas</button></div>
       <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
       <div class="gallery-grid" id="gallery-grid"></div>
       <button class="gallery-more" id="gallery-more" type="button">Mostrar más fotografías</button>
+    </section>
+
+    <section class="stories-section reveal" id="historias" aria-labelledby="stories-title">
+      <div class="section-heading"><div><p class="eyebrow">RECORRIDOS FOTOGRÁFICOS</p><h2 id="stories-title">Una imagen lleva a la siguiente.</h2></div><p class="section-description">Pequeñas historias construidas con fotografías reales de la colección. Cada una propone un modo distinto de mirar Arjona.</p></div>
+      <div class="story-cards" id="story-cards"></div>
     </section>
 
     <section class="agenda-section reveal" id="agenda" aria-labelledby="agenda-title">
@@ -76,6 +82,7 @@
       </div>
       <div class="agenda-filters" role="group" aria-label="Filtrar la agenda"><button class="agenda-filter is-active" data-agenda-filter="all" type="button">Todos</button><button class="agenda-filter" data-agenda-filter="cultura" type="button">Cultura</button><button class="agenda-filter" data-agenda-filter="patrimonio" type="button">Patrimonio</button><button class="agenda-filter" data-agenda-filter="musica" type="button">Música</button><button class="agenda-filter" data-agenda-filter="literatura" type="button">Literatura</button><button class="agenda-filter" data-agenda-filter="gastronomia" type="button">Gastronomía</button><button class="agenda-filter" data-agenda-filter="olivar" type="button">Olivar</button><button class="agenda-filter" data-agenda-filter="tradicion" type="button">Tradición</button></div>
       <div id="agenda-list" class="agenda-list" aria-live="polite"></div>
+      <div class="agenda-archive" id="agenda-archive" hidden aria-labelledby="agenda-archive-title"><p class="eyebrow">MEMORIA DE LA AGENDA</p><h3 id="agenda-archive-title">Actividades ya celebradas.</h3><div id="agenda-archive-list"></div></div>
     </section>
 
     <section class="quiz-section reveal" id="juego" aria-labelledby="quiz-title">
