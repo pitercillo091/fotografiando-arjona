@@ -1,4 +1,5 @@
 import { photos } from './data/photos.js';
+import { quizQuestions } from './data/quiz.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const imagePath = (photo) => `images/${photo.file.toLowerCase().endsWith('.avif') ? `optimized/${photo.file.replace(/\.avif$/i, '')}-fallback.jpg` : photo.file}`;
@@ -161,3 +162,82 @@ music.play().then(updateMusicControl).catch(() => {
   musicToggle.textContent = 'Activar música';
   musicToggle.setAttribute('aria-label', 'Activar música');
 });
+
+const quizState = { index: 0, score: 0, answered: false };
+const quizLabels = { fiestas: 'FIESTASANTOS', observacion: 'OBSERVACIÓN', luz: 'LUZ Y DETALLE', contexto: 'CONTEXTO DE ARJONA' };
+const quizStart = $('#quiz-start');
+const quizPanel = $('#quiz-panel');
+const quizResult = $('#quiz-result');
+const quizOptions = $('#quiz-options');
+const quizFeedback = $('#quiz-feedback');
+const quizNext = $('#quiz-next');
+
+function shuffleOptions(question) {
+  return question.options.map((text, originalIndex) => ({text, originalIndex})).sort((a, b) => {
+    const left = ((question.id.charCodeAt(question.id.length - 1) + a.originalIndex * 7) % 5);
+    const right = ((question.id.charCodeAt(question.id.length - 1) + b.originalIndex * 7) % 5);
+    return left - right || a.originalIndex - b.originalIndex;
+  });
+}
+
+function renderQuizQuestion() {
+  const question = quizQuestions[quizState.index];
+  const photo = photos.find((item) => item.file === question.image);
+  if (!question || !photo) return;
+  quizState.answered = false;
+  $('#quiz-progress').textContent = `Pregunta ${quizState.index + 1} de ${quizQuestions.length}`;
+  $('#quiz-score').textContent = `${quizState.score} ${quizState.score === 1 ? 'acierto' : 'aciertos'}`;
+  $('#quiz-progress-bar').style.width = `${((quizState.index) / quizQuestions.length) * 100}%`;
+  $('#quiz-category').textContent = quizLabels[question.category] || 'ARJONA';
+  $('#quiz-question').textContent = question.question;
+  const image = $('#quiz-image');
+  image.src = imagePath(photo); image.srcset = responsiveSources(photo); image.sizes = '(max-width: 800px) 92vw, 54vw'; image.alt = question.alt; image.width = photo.width; image.height = photo.height;
+  $('#quiz-image-caption').textContent = `${photoTitle(photo)} · Fotografía de Juan Martínez Gómez`;
+  quizOptions.replaceChildren();
+  shuffleOptions(question).forEach(({text, originalIndex}) => {
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'quiz-option'; button.dataset.answer = String(originalIndex); button.textContent = text;
+    button.addEventListener('click', () => answerQuiz(button, question));
+    quizOptions.append(button);
+  });
+  quizFeedback.hidden = true; quizFeedback.replaceChildren(); quizNext.hidden = true;
+}
+
+function answerQuiz(selectedButton, question) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  const correct = Number(selectedButton.dataset.answer) === question.correctAnswer;
+  if (correct) quizState.score += 1;
+  quizOptions.querySelectorAll('button').forEach((button) => {
+    button.disabled = true;
+    const answerIndex = Number(button.dataset.answer);
+    if (answerIndex === question.correctAnswer) button.classList.add('is-correct');
+    if (button === selectedButton && !correct) button.classList.add('is-wrong');
+  });
+  const status = document.createElement('strong'); status.textContent = correct ? 'Correcta.' : 'Todavía no.';
+  const explanation = document.createElement('span'); explanation.textContent = ` ${question.explanation}`;
+  quizFeedback.append(status, explanation);
+  if (question.source) {
+    const source = document.createElement('a'); source.href = question.source; source.target = '_blank'; source.rel = 'noopener noreferrer'; source.textContent = `Fuente: ${question.sourceLabel}`;
+    quizFeedback.append(document.createElement('br'), source);
+  }
+  quizFeedback.hidden = false; quizNext.hidden = false; $('#quiz-score').textContent = `${quizState.score} ${quizState.score === 1 ? 'acierto' : 'aciertos'}`;
+  quizFeedback.focus({preventScroll: true});
+}
+
+function finishQuiz() {
+  const percentage = Math.round((quizState.score / quizQuestions.length) * 100);
+  $('#quiz-result-score').textContent = `${quizState.score} de ${quizQuestions.length} · ${percentage}% de aciertos`;
+  $('#quiz-result-message').textContent = percentage >= 75 ? 'Has reconocido muchos detalles y referencias de Arjona. La galería guarda más matices.' : percentage >= 50 ? 'Has encontrado varias pistas. Vuelve a la galería y mira las imágenes con otra pausa.' : 'Cada respuesta abre una pista nueva. Explora la galería y vuelve a intentarlo cuando quieras.';
+  quizPanel.hidden = true; quizResult.hidden = false; quizResult.focus({preventScroll: true});
+}
+
+function startQuiz() {
+  quizState.index = 0; quizState.score = 0;
+  quizStart.closest('.quiz-intro').hidden = true; quizResult.hidden = true; quizPanel.hidden = false; renderQuizQuestion();
+  quizPanel.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'});
+}
+
+quizStart.addEventListener('click', startQuiz);
+quizNext.addEventListener('click', () => { if (quizState.index === quizQuestions.length - 1) finishQuiz(); else { quizState.index += 1; renderQuizQuestion(); $('#quiz-question').focus?.({preventScroll: true}); } });
+$('#quiz-restart').addEventListener('click', () => { quizResult.hidden = true; quizStart.closest('.quiz-intro').hidden = false; quizStart.focus(); });

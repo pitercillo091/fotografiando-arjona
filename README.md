@@ -28,3 +28,18 @@ El flujo de GitHub Actions prepara una copia estática en `_site`; las fotos ori
 4. Haz commit y push a `main`; GitHub Pages volverá a publicar la web.
 
 Las imágenes deben tener un texto alternativo objetivo. No asignes años ni lugares concretos si no están confirmados. La portada se define en `enhancements.css` y en los metadatos de `index.html`.
+
+## Juego de observación
+
+Las preguntas están en `data/quiz.js`. Cada entrada necesita:
+
+- `image`: nombre exacto de un archivo que ya exista en `public/images` y proceda de `GALERIA DE FOTOS`.
+- `alt`: descripción objetiva de la imagen.
+- `question`, `options` y `correctAnswer`: tres opciones y el índice de una única respuesta válida.
+- `explanation`: explicación breve después de responder.
+- `source` y `sourceLabel` cuando la respuesta use información histórica, cultural o turística.
+- `category`: `fiestas`, `observacion`, `luz` o `contexto`.
+
+Para añadir una pregunta, copia una entrada de `data/quiz.js`, cambia el `id`, selecciona una fotografía revisada y comprueba que la respuesta pueda defenderse con la imagen o con la fuente enlazada. El sistema mezcla las opciones de forma determinista, muestra una pregunta cada vez y precarga solo la imagen que corresponde al estado actual.
+
+Después de editar, ejecuta `npm run check` y abre `http://localhost:4173/`. La sección aparece en `#juego` y también está enlazada desde la navegación superior.

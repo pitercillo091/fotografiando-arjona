@@ -26,7 +26,7 @@
   <header class="topbar">
     <a class="brand" href="#inicio" aria-label="Fotografiando Arjona, volver al inicio"><img class="brand-logo" src="images/logo-fotografiando-arjona.svg" alt="Fotografiando Arjona" width="720" height="154"></a>
     <nav aria-label="Secciones principales">
-      <a href="#recorrido">El recorrido</a><a href="#galeria">Galería</a><a href="#fuentes">Fuentes</a>
+      <a href="#recorrido">El recorrido</a><a href="#galeria">Galería</a><a href="#juego">Juego</a><a href="#fuentes">Fuentes</a>
     </nav>
   </header>
   <main id="main">
@@ -67,6 +67,36 @@
       <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
       <div class="gallery-grid" id="gallery-grid"></div>
       <button class="gallery-more" id="gallery-more" type="button">Mostrar más fotografías</button>
+    </section>
+
+    <section class="quiz-section reveal" id="juego" aria-labelledby="quiz-title">
+      <div class="quiz-intro">
+        <p class="eyebrow">UNA PAUSA PARA MIRAR</p>
+        <h2 id="quiz-title">Mira la fotografía.<br><em>Descubre Arjona.</em></h2>
+        <p>Observa cada imagen y responde una pregunta. El juego utiliza fotografías de Juan Martínez Gómez y contexto documentado sobre Arjona.</p>
+        <button class="primary quiz-start" id="quiz-start" type="button">Empezar el recorrido <span aria-hidden="true">→</span></button>
+      </div>
+      <div class="quiz-panel" id="quiz-panel" hidden aria-live="polite">
+        <div class="quiz-progress-row"><span id="quiz-progress">Pregunta 1 de 8</span><span id="quiz-score">0 aciertos</span></div>
+        <div class="quiz-progress" aria-hidden="true"><span id="quiz-progress-bar"></span></div>
+        <div class="quiz-layout">
+          <figure class="quiz-figure"><img id="quiz-image" alt="" width="1280" height="853" loading="eager" decoding="async"><figcaption id="quiz-image-caption"></figcaption></figure>
+          <div class="quiz-copy">
+            <p class="eyebrow" id="quiz-category">OBSERVACIÓN</p>
+            <h3 id="quiz-question"></h3>
+            <div class="quiz-options" id="quiz-options" role="group" aria-label="Opciones de respuesta"></div>
+            <div class="quiz-feedback" id="quiz-feedback" tabindex="-1" hidden></div>
+            <button class="quiz-next" id="quiz-next" type="button" hidden>Siguiente pregunta <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+        <p class="eyebrow">RECORRIDO COMPLETADO</p>
+        <h3 id="quiz-result-title">Has mirado Arjona con atención.</h3>
+        <p class="quiz-result-score" id="quiz-result-score"></p>
+        <p id="quiz-result-message"></p>
+        <div class="quiz-result-actions"><button class="primary" id="quiz-restart" type="button">Volver a jugar</button><a class="text-link" href="#galeria" id="quiz-gallery-link">Volver a la galería <span aria-hidden="true">↗</span></a></div>
+      </div>
     </section>
 
     <section class="context reveal" aria-labelledby="context-title"><div class="context-number">ARJONA<br><span>01</span></div><div><p class="eyebrow">EL LUGAR COMO CAPA</p><h2 id="context-title">Una ciudad elevada sobre la Campiña.</h2><p>Las fuentes institucionales y culturales sitúan Arjona en un paisaje de larga continuidad histórica, con un conjunto monumental que reúne murallas, iglesias, espacios museográficos y relatos vinculados a Alhamar. Aquí aparecen como coordenadas para mirar mejor, no como sustituto de la fotografía.</p><a class="text-link" href="#fuentes">Consultar contexto y fuentes <span aria-hidden="true">↗</span></a></div></section>
