@@ -115,4 +115,6 @@ export const photos = [
   {id:'arjona-378',file:'89ea9cf605741e7b.jpeg',width:853,height:1280,bytes:187162,category:'patrimonio',categoryLabel:'Verticales',title:'Fotografía 378'},
   {id:'arjona-379',file:'4e1d29d619a243bb.jpeg',width:1280,height:856,bytes:553928,category:'paisaje',categoryLabel:'Horizontales',title:'Fotografía 379'},
   {id:'arjona-380',file:'5b2c03deabfa3f01.jpeg',width:853,height:1280,bytes:129429,category:'patrimonio',categoryLabel:'Verticales',title:'Fotografía 380'},
+  {id:'arjona-381',file:'360456ed449b8097.jpeg',width:856,height:1280,bytes:109031,category:'patrimonio',categoryLabel:'Verticales',title:'Fotografía 381'},
+  {id:'arjona-382',file:'b5c9bbe54fa67dd5.jpeg',width:853,height:1280,bytes:74893,category:'patrimonio',categoryLabel:'Verticales',title:'Fotografía 382'},
 ];
