@@ -8,5 +8,6 @@ await cp('data/photos.js', '_site/data/photos.js');
 await cp('data/quiz.js', '_site/data/quiz.js');
 await cp('data/agenda.js', '_site/data/agenda.js');
 await cp('data/stories.js', '_site/data/stories.js');
+await cp('data/andalucia.js', '_site/data/andalucia.js');
 await cp('public', '_site', { recursive: true });
 console.log('Preparada la web estática en _site.');
