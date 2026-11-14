@@ -1,6 +1,6 @@
 import { photos } from './data/photos.js';
 import { quizQuestions } from './data/quiz.js';
-import { agendaEvents } from './data/agenda.js';
+import { agendaEvents, agendaReferenceImages } from './data/agenda.js';
 import { agendaArchive } from './data/agenda.js';
 import { photoStories } from './data/stories.js';
 
@@ -303,9 +303,12 @@ function renderAgenda(filter = agendaFilter) {
     const heading = document.createElement('h3'); heading.id = `agenda-month-${month}`; heading.textContent = agendaMonthLabel(month); monthSection.append(heading);
     const grid = document.createElement('div'); grid.className = 'agenda-events';
     monthEvents.forEach((event) => {
+      const referenceImage = agendaReferenceImages[event.id];
       const photo = event.image ? photos.find((item) => item.file === event.image) : null;
       const article = document.createElement('article'); article.className = `agenda-event${event.featured ? ' is-featured' : ''}`;
-      const media = photo ? `<img src="${imagePath(photo)}" srcset="${responsiveSources(photo)}" sizes="(max-width: 800px) 92vw, 34vw" alt="${escapeAgenda(event.alt)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async">` : '<div class="agenda-art" aria-hidden="true">ARJONA</div>';
+      const media = referenceImage
+        ? `<div class="agenda-media-frame"><img src="${escapeAgenda(referenceImage.src)}" alt="${escapeAgenda(referenceImage.alt)}" loading="lazy" decoding="async"><a class="agenda-image-credit" href="${escapeAgenda(referenceImage.sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeAgenda(referenceImage.credit)} <span aria-hidden="true">↗</span></a></div>`
+        : photo ? `<img src="${imagePath(photo)}" srcset="${responsiveSources(photo)}" sizes="(max-width: 800px) 92vw, 34vw" alt="${escapeAgenda(event.alt)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async">` : '<div class="agenda-art" aria-hidden="true">ARJONA</div>';
       article.innerHTML = `<div class="agenda-media">${media}</div><div class="agenda-event-body"><div class="agenda-event-top"><span class="agenda-date">${escapeAgenda(agendaDateLabel(event))}</span><span class="agenda-status status-${escapeAgenda(event.status)}">${escapeAgenda(agendaStatusLabels[event.status] || event.status)}</span></div><p class="agenda-category">${escapeAgenda(agendaCategoryLabels[event.category] || event.category)}</p><h4>${escapeAgenda(event.title)}</h4><p class="agenda-description">${escapeAgenda(event.description)}</p><p class="agenda-location">${escapeAgenda(event.time ? `${event.time} · ${event.location}` : event.location)}</p><a class="agenda-source" href="${escapeAgenda(event.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fuente y más información <span aria-hidden="true">↗</span></a></div>`;
       grid.append(article);
     });

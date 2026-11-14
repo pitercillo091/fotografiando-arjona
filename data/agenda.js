@@ -78,3 +78,45 @@ export const agendaEvents = [
 
 // El automatismo mensual añade aquí los meses cerrados sin tocar la agenda futura.
 export const agendaArchive = [];
+
+// Imágenes de referencia publicadas por el Ayuntamiento de Arjona.
+// Se separan de las fotos de Juan para no atribuirle material de terceros.
+const otonoImagen = {
+  src: 'images/agenda-referencias/otono-cultural-2026.png',
+  alt: 'Presentación municipal del programa Otoño Cultural 2026 en Arjona.',
+  credit: 'Ayuntamiento de Arjona · presentación del Otoño Cultural 2026',
+  sourceUrl: 'https://arjona.es/arjona-presenta-su-otono-cultural-2026-con-27-actividades-que-conectan-cultura-patrimonio-y-turismo/'
+};
+
+export const agendaReferenceImages = {
+  'arjona-2026-pacto-jaen': otonoImagen,
+  'arjona-2026-talleres-creacion': otonoImagen,
+  'arjona-2026-cafe-literario': otonoImagen,
+  'arjona-2026-charla-lorca': otonoImagen,
+  'arjona-2026-ruta-tapa': otonoImagen,
+  'arjona-2026-patrimonio-religioso': otonoImagen,
+  'arjona-2026-semana-musica': otonoImagen,
+  'arjona-2026-pop-rock': otonoImagen,
+  'arjona-2026-ciencia-ruta': otonoImagen,
+  'arjona-2026-olivar-cultura': otonoImagen,
+  'arjona-2026-eco-nazari': otonoImagen,
+  'arjona-2026-musica-antigua': otonoImagen,
+  'arjona-2026-toro-cana': {
+    src: 'images/agenda-referencias/toro-de-cana.jpg',
+    alt: 'Cartel municipal del Toro de Caña con una imagen del desfile y el programa de una edición anterior.',
+    credit: 'Ayuntamiento de Arjona · imagen de una edición anterior',
+    sourceUrl: 'https://arjona.es/el-toro-de-cana-vuelve-a-llenar-arjona-de-tradicion-y-cultura/'
+  },
+  'arjona-2026-campana-fidelidad': {
+    src: 'images/agenda-referencias/campana-fidelidad.jpg',
+    alt: 'Cartel municipal de una edición anterior de la Campaña Fidelidad con flores de Pascua.',
+    credit: 'Ayuntamiento de Arjona · cartel de una edición anterior',
+    sourceUrl: 'https://arjona.es/hoy-comienza-la-campana-fidelidad-de-apoyo-al-comercio-local/'
+  },
+  'arjona-2027-fiestasantos': {
+    src: 'images/agenda-referencias/fiestasantos-2026.png',
+    alt: 'Ilustración oficial de Fiestasantos 2026; se muestra como referencia para la edición de 2027.',
+    credit: 'Ayuntamiento de Arjona · cartel de Fiestasantos 2026, imagen de referencia',
+    sourceUrl: 'https://arjona.es/programa-de-fiestasantos-2026/'
+  }
+};
