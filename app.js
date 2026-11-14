@@ -291,6 +291,15 @@ function escapeAgenda(value) {
   return String(value).replace(/[&<>'"]/g, (character) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[character]));
 }
 
+function renderAgendaReferenceImage(image) {
+  const dimensions = image.width && image.height ? ` width="${image.width}" height="${image.height}"` : '';
+  const credit = escapeAgenda(image.credit);
+  const attribution = image.sourceUrl
+    ? `<a class="agenda-image-credit" href="${escapeAgenda(image.sourceUrl)}" target="_blank" rel="noopener noreferrer">${credit} <span aria-hidden="true">↗</span></a>`
+    : `<span class="agenda-image-credit">${credit}</span>`;
+  return `<div class="agenda-media-frame"><img src="${escapeAgenda(image.src)}" alt="${escapeAgenda(image.alt)}"${dimensions} loading="lazy" decoding="async">${attribution}</div>`;
+}
+
 function renderAgenda(filter = agendaFilter) {
   const list = $('#agenda-list');
   if (!list) return;
@@ -307,7 +316,7 @@ function renderAgenda(filter = agendaFilter) {
       const photo = event.image ? photos.find((item) => item.file === event.image) : null;
       const article = document.createElement('article'); article.className = `agenda-event${event.featured ? ' is-featured' : ''}`;
       const media = referenceImage
-        ? `<div class="agenda-media-frame"><img src="${escapeAgenda(referenceImage.src)}" alt="${escapeAgenda(referenceImage.alt)}" loading="lazy" decoding="async"><a class="agenda-image-credit" href="${escapeAgenda(referenceImage.sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeAgenda(referenceImage.credit)} <span aria-hidden="true">↗</span></a></div>`
+        ? renderAgendaReferenceImage(referenceImage)
         : photo ? `<img src="${imagePath(photo)}" srcset="${responsiveSources(photo)}" sizes="(max-width: 800px) 92vw, 34vw" alt="${escapeAgenda(event.alt)}" width="${photo.width}" height="${photo.height}" loading="lazy" decoding="async">` : '<div class="agenda-art" aria-hidden="true">ARJONA</div>';
       article.innerHTML = `<div class="agenda-media">${media}</div><div class="agenda-event-body"><div class="agenda-event-top"><span class="agenda-date">${escapeAgenda(agendaDateLabel(event))}</span><span class="agenda-status status-${escapeAgenda(event.status)}">${escapeAgenda(agendaStatusLabels[event.status] || event.status)}</span></div><p class="agenda-category">${escapeAgenda(agendaCategoryLabels[event.category] || event.category)}</p><h4>${escapeAgenda(event.title)}</h4><p class="agenda-description">${escapeAgenda(event.description)}</p><p class="agenda-location">${escapeAgenda(event.time ? `${event.time} · ${event.location}` : event.location)}</p><a class="agenda-source" href="${escapeAgenda(event.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fuente y más información <span aria-hidden="true">↗</span></a></div>`;
       grid.append(article);

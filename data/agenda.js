@@ -79,28 +79,29 @@ export const agendaEvents = [
 // El automatismo mensual añade aquí los meses cerrados sin tocar la agenda futura.
 export const agendaArchive = [];
 
-// Imágenes de referencia publicadas por el Ayuntamiento de Arjona.
-// Se separan de las fotos de Juan para no atribuirle material de terceros.
-const otonoImagen = {
-  src: 'images/agenda-referencias/otono-cultural-2026.png',
-  alt: 'Presentación municipal del programa Otoño Cultural 2026 en Arjona.',
-  credit: 'Ayuntamiento de Arjona · presentación del Otoño Cultural 2026',
-  sourceUrl: 'https://arjona.es/arjona-presenta-su-otono-cultural-2026-con-27-actividades-que-conectan-cultura-patrimonio-y-turismo/'
-};
+function novemberIllustration(file, alt) {
+  return {
+    src: `images/agenda-recreaciones/noviembre-2026/${file}.webp`,
+    width: 900,
+    height: 600,
+    alt,
+    credit: 'Recreación con IA'
+  };
+}
 
 export const agendaReferenceImages = {
-  'arjona-2026-pacto-jaen': otonoImagen,
-  'arjona-2026-talleres-creacion': otonoImagen,
-  'arjona-2026-cafe-literario': otonoImagen,
-  'arjona-2026-charla-lorca': otonoImagen,
-  'arjona-2026-ruta-tapa': otonoImagen,
-  'arjona-2026-patrimonio-religioso': otonoImagen,
-  'arjona-2026-semana-musica': otonoImagen,
-  'arjona-2026-pop-rock': otonoImagen,
-  'arjona-2026-ciencia-ruta': otonoImagen,
-  'arjona-2026-olivar-cultura': otonoImagen,
-  'arjona-2026-eco-nazari': otonoImagen,
-  'arjona-2026-musica-antigua': otonoImagen,
+  'arjona-2026-pacto-jaen': novemberIllustration('pacto-jaen', 'Pergaminos y sellos de cera sobre una mesa de piedra, con un pueblo al fondo.'),
+  'arjona-2026-talleres-creacion': novemberIllustration('talleres-creacion', 'Tazas y bolsas de tela decoradas, con pinceles y pinturas sobre una mesa de trabajo.'),
+  'arjona-2026-cafe-literario': novemberIllustration('cafe-literario', 'Una taza de café y un libro cerrado sobre una mesa junto a una puerta iluminada.'),
+  'arjona-2026-charla-lorca': novemberIllustration('charla-lorca', 'Libro abierto y clavel rojo junto a la sombra de una reja.'),
+  'arjona-2026-ruta-tapa': novemberIllustration('ruta-tapa', 'Tostada con pimientos asados y un plato de aceitunas sobre una barra de madera.'),
+  'arjona-2026-patrimonio-religioso': novemberIllustration('patrimonio-religioso', 'Portada de piedra tallada y puerta de madera de una iglesia imaginada.'),
+  'arjona-2026-semana-musica': novemberIllustration('semana-musica', 'Saxofón y clarinetes en una sala de ensayo con sillas y atriles.'),
+  'arjona-2026-pop-rock': novemberIllustration('pop-rock', 'Guitarra eléctrica, batería y micrófono en un escenario vacío iluminado en tonos cálidos.'),
+  'arjona-2026-ciencia-ruta': novemberIllustration('ciencia-ruta', 'Prisma de vidrio que proyecta una franja de colores sobre una tarjeta.'),
+  'arjona-2026-olivar-cultura': novemberIllustration('olivar-cultura', 'Cesta de esparto con aceitunas y hileras de olivos al fondo.'),
+  'arjona-2026-eco-nazari': novemberIllustration('eco-nazari', 'Relieve de yeso con arabescos y fragmentos de azulejo geométrico en una exposición imaginada.'),
+  'arjona-2026-musica-antigua': novemberIllustration('musica-antigua', 'Violonchelo, silla y atril en una nave de piedra iluminada.'),
   'arjona-2026-toro-cana': {
     src: 'images/agenda-referencias/toro-de-cana.jpg',
     alt: 'Cartel municipal del Toro de Caña con una imagen del desfile y el programa de una edición anterior.',
