@@ -1,6 +1,5 @@
 import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { agendaEvents } from '../data/agenda.js';
 
@@ -80,12 +79,11 @@ for (const event of agendaEvents) {
     const extension = path.extname(filename).toLowerCase().replace('.jpeg', '.jpg').replace('.jfif', '.jpg');
     const outputName = `${slug(event.title)}${index ? `-${index + 1}` : ''}${extension}`;
     const originalPath = path.join(sourceDirectory, filename);
-    const [width, height] = execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', originalPath], { encoding: 'utf8' }).trim().split(',').map(Number);
     await copyFile(originalPath, path.join(outputDirectory, outputName));
     images.push({
       src: `images/agenda/${outputName}`,
-      width,
-      height,
+      width: null,
+      height: null,
       alt: altDescriptions[filename] || `Imagen asociada al evento ${event.title} en Arjona.`,
       credit: filename === 'XVII Ruta de la Tapa.jfif' ? 'Cartel de la Ruta de la Tapa' : 'Juan Martínez Gómez',
       originalName: filename
