@@ -60,6 +60,26 @@ export const agendaEvents = [
     sourceLabel: 'Ayuntamiento de Arjona · Otoño Cultural 2026', sourceUrl: 'https://arjona.es/wp-content/uploads/2026/10/PROGRAMACIO%CC%81N-OFICIAL-OTON%CC%83O-CULTURAL-2026-1_compressed.pdf'
   },
   {
+    id: 'arjona-2026-paraguas-violeta', title: 'Taller Paraguas Violeta', dateStart: '2026-11-18', dateEnd: '2026-11-19', time: '16:30–19:30', location: 'Vivero de Empresas, calle San Nicasio, 19', category: 'cultura', status: 'confirmado', featured: true,
+    description: 'Taller de expresión artística incluido en la programación municipal del Día Internacional contra la Violencia hacia las Mujeres. Plazas limitadas; requiere inscripción en el Área de Igualdad.',
+    sourceLabel: 'Ayuntamiento de Arjona · Programación 25N 2026', sourceUrl: 'https://arjona.es/programacion-del-dia-internacional-contra-la-violencia-hacia-las-mujeres/', lastVerified: '2026-11-15'
+  },
+  {
+    id: 'arjona-2026-marcha-25n', title: 'Pasos firmes contra la violencia hacia las mujeres', dateStart: '2026-11-25', time: '17:00', location: 'Salida desde la Plaza de San Juan', category: 'cultura', status: 'confirmado', featured: true,
+    description: 'Marcha incluida en la programación del 25N en Arjona para visibilizar el rechazo a la violencia contra las mujeres.',
+    sourceLabel: 'Ayuntamiento de Arjona · Programación 25N 2026', sourceUrl: 'https://arjona.es/programacion-del-dia-internacional-contra-la-violencia-hacia-las-mujeres/', lastVerified: '2026-11-15'
+  },
+  {
+    id: 'arjona-2026-acto-25n', title: 'Acto institucional y performances del 25N', dateStart: '2026-11-25', time: '18:30', location: 'Centro Cultural Cine Capitol', category: 'cultura', status: 'confirmado', featured: false,
+    description: 'Lectura del manifiesto y actuaciones «Ni una más» y «Hay salida», realizadas por la Asociación Zaida y el Área de Igualdad.',
+    sourceLabel: 'Ayuntamiento de Arjona · Programación 25N 2026', sourceUrl: 'https://arjona.es/programacion-del-dia-internacional-contra-la-violencia-hacia-las-mujeres/', lastVerified: '2026-11-15'
+  },
+  {
+    id: 'arjona-2026-mesa-redonda-25n', title: 'Recursos de apoyo en Arjona para víctimas', dateStart: '2026-11-26', time: '17:00', location: 'Salón de Plenos del Ayuntamiento de Arjona', category: 'cultura', status: 'confirmado', featured: false,
+    description: 'Mesa redonda con profesionales y representantes de servicios sociales, salud, igualdad, la Asociación Zaida y las Fuerzas y Cuerpos de Seguridad.',
+    sourceLabel: 'Ayuntamiento de Arjona · Programación 25N 2026', sourceUrl: 'https://arjona.es/programacion-del-dia-internacional-contra-la-violencia-hacia-las-mujeres/', lastVerified: '2026-11-15'
+  },
+  {
     id: 'arjona-2026-toro-cana', title: 'El Toro de Caña', dateStart: '2026-12-18', dateEnd: '2026-12-23', time: null, location: 'Centro Cultural Cine Capitol, Colección Museográfica y conjunto histórico', category: 'tradicion', status: 'confirmado', featured: true,
     description: 'Tradición navideña recuperada con talleres, villancicos, música popular, desfile por el conjunto histórico y convivencia vecinal.',
     sourceLabel: 'Ayuntamiento de Arjona · El Toro de Caña', sourceUrl: 'https://arjona.es/el-toro-de-cana-vuelve-a-llenar-arjona-de-tradicion-y-cultura/'

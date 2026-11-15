@@ -47,6 +47,12 @@ const ambiguousFiles = [];
 const unassignedFiles = [];
 const manualReview = [];
 const altDescriptions = {
+  'Aproximación al poeta ¿Y si estoy Lorca.jpeg': 'Folleto de la Ruta Literaria Juan Eslava Galán, con una imagen del escritor y libros sobre Arjona.',
+  'Café literario con José Antonio Lucero.jpeg': 'Dulces decorados en un cuenco sobre una mesa, junto a un folleto.',
+  'Concierto de pop-rock.jpeg': 'Rótulo iluminado de Arjona en una ladera al anochecer.',
+  'El Pacto de Jaén Alhamar y Fernando III.jpeg': 'Primer plano de una escultura de rostro barbado frente a un muro de piedra.',
+  'El eco nazarí la Alhambra como inspiración en el mundo.jpeg': 'Sillón de madera tallada con motivos ornamentales y decoración de inspiración nazarí.',
+  'Talleres de creación artística.jpeg': 'Bolsas de tela decoradas con ilustraciones coloridas de Arjona.',
   'Fiestasantos 2027.jpeg': 'Figura festiva artesanal de Fiestasantos, con sombrero negro, pañuelo rojo y medalla.',
   'Campaña Fidelidad entrega de flores de Pascua.jpeg': 'Primer plano de flores rojas de la fotografía asociada a la Campaña Fidelidad de Arjona.',
   'El Toro de Caña.jpeg': 'Figura de El Toro de Caña, con máscara de tela, cañas y cencerros.',
@@ -54,6 +60,8 @@ const altDescriptions = {
   'Patrimonio artístico-religioso de Arjona.jpeg': 'Fachada de piedra de una iglesia con portada arqueada y puertas de madera.',
   'XVII Ruta de la Tapa.jfif': 'Cartel de la Ruta de la Tapa de Arjona con platos ilustrados y lista de establecimientos participantes.'
 };
+manualReview.push('La imagen «Aproximación al poeta ¿Y si estoy Lorca.jpeg» muestra un folleto de la Ruta Literaria Juan Eslava Galán, no una referencia visual clara a la charla sobre Lorca. Se conserva la asignación por nombre, pero conviene confirmar que el archivo es el previsto.');
+manualReview.push('La imagen «Café literario con José Antonio Lucero.jpeg» muestra dulces y un folleto, sin identificar visualmente al escritor ni el encuentro. Se conserva la asignación por nombre; confirmar que el archivo es el previsto.');
 for (const filename of imageFiles) {
   const candidates = eventsByName.get(normalizeName(filename)) || [];
   if (candidates.length === 0) {
@@ -100,9 +108,11 @@ const assignmentModule = `// Generado por scripts/sync-agenda-images.mjs a parti
 await writeFile(path.join(root, 'data', 'agenda-images.js'), assignmentModule, 'utf8');
 
 const unmatchedEvents = agendaEvents.filter((event) => !assignments[event.id]).map((event) => event.title);
+const verifiedOn = new Date().toISOString().slice(0, 10);
 const report = [
   '# Revisión de fotografías de Agenda',
   '',
+  `Última revisión: ${verifiedOn}`,
   `Carpeta revisada: \`AGENDA\` · Archivos de imagen: ${imageFiles.length}`,
   '',
   '## Eventos con imagen',

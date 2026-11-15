@@ -1,5 +1,45 @@
 // Generado por scripts/sync-agenda-images.mjs a partir de AGENDA.
 export const agendaImageAssignments = {
+  "arjona-2026-pacto-jaen": [
+    {
+      "src": "images/agenda/el-pacto-de-jaen-alhamar-y-fernando-iii.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Primer plano de una escultura de rostro barbado frente a un muro de piedra.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "El Pacto de Jaén Alhamar y Fernando III.jpeg"
+    }
+  ],
+  "arjona-2026-talleres-creacion": [
+    {
+      "src": "images/agenda/talleres-de-creacion-artistica.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Bolsas de tela decoradas con ilustraciones coloridas de Arjona.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "Talleres de creación artística.jpeg"
+    }
+  ],
+  "arjona-2026-cafe-literario": [
+    {
+      "src": "images/agenda/cafe-literario-con-jose-antonio-lucero.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Dulces decorados en un cuenco sobre una mesa, junto a un folleto.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "Café literario con José Antonio Lucero.jpeg"
+    }
+  ],
+  "arjona-2026-charla-lorca": [
+    {
+      "src": "images/agenda/aproximacion-al-poeta-y-si-estoy-lorca.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Folleto de la Ruta Literaria Juan Eslava Galán, con una imagen del escritor y libros sobre Arjona.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "Aproximación al poeta ¿Y si estoy Lorca.jpeg"
+    }
+  ],
   "arjona-2026-ruta-tapa": [
     {
       "src": "images/agenda/xvii-ruta-de-la-tapa.jpg",
@@ -20,6 +60,16 @@ export const agendaImageAssignments = {
       "originalName": "Patrimonio artístico-religioso de Arjona.jpeg"
     }
   ],
+  "arjona-2026-pop-rock": [
+    {
+      "src": "images/agenda/concierto-de-pop-rock.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Rótulo iluminado de Arjona en una ladera al anochecer.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "Concierto de pop-rock.jpeg"
+    }
+  ],
   "arjona-2026-olivar-cultura": [
     {
       "src": "images/agenda/olivar-cultura-y-tradicion.jpg",
@@ -28,6 +78,16 @@ export const agendaImageAssignments = {
       "alt": "Instalación de ramas de olivo en mosaico junto a una mesa de productos y un cartel de degustación.",
       "credit": "Juan Martínez Gómez",
       "originalName": "Olivar, cultura y tradición.jpeg"
+    }
+  ],
+  "arjona-2026-eco-nazari": [
+    {
+      "src": "images/agenda/el-eco-nazari-la-alhambra-como-inspiracion-en-el-mundo.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Sillón de madera tallada con motivos ornamentales y decoración de inspiración nazarí.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "El eco nazarí la Alhambra como inspiración en el mundo.jpeg"
     }
   ],
   "arjona-2026-toro-cana": [
