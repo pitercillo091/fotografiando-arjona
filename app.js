@@ -317,7 +317,7 @@ function renderAgenda(filter = agendaFilter) {
       const article = document.createElement('article'); article.className = `agenda-event${event.featured ? ' is-featured' : ''}`;
       const media = referenceImage
         ? renderAgendaReferenceImage(referenceImage)
-        : '<div class="agenda-art">ARJONA<span>Fotografía pendiente</span></div>';
+        : '<div class="agenda-art"><img src="images/agenda/fotografia-pendiente.jpg" alt="Imagen provisional: fotografía pendiente" loading="lazy" decoding="async"><span>Fotografía pendiente</span></div>';
       article.innerHTML = `<div class="agenda-media">${media}</div><div class="agenda-event-body"><div class="agenda-event-top"><span class="agenda-date">${escapeAgenda(agendaDateLabel(event))}</span><span class="agenda-status status-${escapeAgenda(event.status)}">${escapeAgenda(agendaStatusLabels[event.status] || event.status)}</span></div><p class="agenda-category">${escapeAgenda(agendaCategoryLabels[event.category] || event.category)}</p><h4>${escapeAgenda(event.title)}</h4><p class="agenda-description">${escapeAgenda(event.description)}</p><p class="agenda-location">${escapeAgenda(event.time ? `${event.time} · ${event.location}` : event.location)}</p><a class="agenda-source" href="${escapeAgenda(event.sourceUrl)}" target="_blank" rel="noopener noreferrer">Fuente y más información <span aria-hidden="true">↗</span></a></div>`;
       grid.append(article);
     });

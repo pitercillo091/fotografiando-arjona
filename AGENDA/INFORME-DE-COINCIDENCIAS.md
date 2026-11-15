@@ -1,30 +1,33 @@
 # Revisión de fotografías de Agenda
 
 Última revisión: 2026-11-15
-Carpeta revisada: `AGENDA` · Archivos de imagen: 15
+Carpeta revisada: `AGENDA` · Archivos de imagen: 16
 
-## Eventos con imagen
-- El Pacto de Jaén: Alhamar y Fernando III: `El Pacto de Jaén Alhamar y Fernando III.jpeg`
-- Talleres de creación artística: `Talleres de creación artística.jpeg`
-- Café literario con José Antonio Lucero: `Café literario con José Antonio Lucero.jpeg`
-- Aproximación al poeta: ¿Y si estoy Lorca?: `Aproximación al poeta ¿Y si estoy Lorca.jpeg`
-- XVII Ruta de la Tapa: `XVII Ruta de la Tapa.jfif`
-- Patrimonio artístico-religioso de Arjona: `Patrimonio artístico-religioso de Arjona.jpeg`
-- Semana de la Música: `Semana de la Música.jpeg`
-- Concierto de pop-rock: `Concierto de pop-rock.jpeg`
-- Ciencia e innovación en ruta: `Ciencia e innovación en ruta.jpeg`
-- Olivar, cultura y tradición: `Olivar, cultura y tradición.jpeg`
-- El eco nazarí: la Alhambra como inspiración en el mundo: `El eco nazarí la Alhambra como inspiración en el mundo.jpeg`
-- Taller Paraguas Violeta: `Taller Paraguas Violeta.jpeg`
-- El Toro de Caña: `El Toro de Caña.jpeg`
-- Campaña Fidelidad: entrega de flores de Pascua: `Campaña Fidelidad entrega de flores de Pascua.jpeg`
-- Fiestasantos 2027: `Fiestasantos 2027.jpeg`
+## Eventos con fotografía propia
+- El Pacto de Jaén: Alhamar y Fernando III: El Pacto de Jaén Alhamar y Fernando III.jpeg
+- Talleres de creación artística: Talleres de creación artística.jpeg
+- Café literario con José Antonio Lucero: Café literario con José Antonio Lucero.jpeg
+- Aproximación al poeta: ¿Y si estoy Lorca?: Aproximación al poeta ¿Y si estoy Lorca.jpeg
+- XVII Ruta de la Tapa: XVII Ruta de la Tapa.jfif
+- Patrimonio artístico-religioso de Arjona: Patrimonio artístico-religioso de Arjona.jpeg
+- Semana de la Música: Semana de la Música.jpeg
+- Concierto de pop-rock: Concierto de pop-rock.jpeg
+- Ciencia e innovación en ruta: Ciencia e innovación en ruta.jpeg
+- Olivar, cultura y tradición: Olivar, cultura y tradición.jpeg
+- El eco nazarí: la Alhambra como inspiración en el mundo: El eco nazarí la Alhambra como inspiración en el mundo.jpeg
+- Taller Paraguas Violeta: Taller Paraguas Violeta.jpeg
+- El Toro de Caña: El Toro de Caña.jpeg
+- Campaña Fidelidad: entrega de flores de Pascua: Campaña Fidelidad entrega de flores de Pascua.jpeg
+- Fiestasantos 2027: Fiestasantos 2027.jpeg
 
-## Eventos sin imagen
-- Ciclo de Música Antigua Andrés Vandelvira
-- Pasos firmes contra la violencia hacia las mujeres
-- Acto institucional y performances del 25N
-- Recursos de apoyo en Arjona para víctimas
+## Eventos con fotografía provisional
+- Ciclo de Música Antigua Andrés Vandelvira: `Fotografía pendiente.jpeg`
+- Pasos firmes contra la violencia hacia las mujeres: `Fotografía pendiente.jpeg`
+- Acto institucional y performances del 25N: `Fotografía pendiente.jpeg`
+- Recursos de apoyo en Arjona para víctimas: `Fotografía pendiente.jpeg`
+
+## Eventos sin imagen asignada
+- Ninguno
 
 ## Fotografías sin evento
 - Ninguna
@@ -33,7 +36,7 @@ Carpeta revisada: `AGENDA` · Archivos de imagen: 15
 - Ninguna
 
 ## Archivos idénticos
-- `Semana de la Música.jpeg` y `Taller Paraguas Violeta.jpeg`
+- `Fotografía pendiente.jpeg` y `Semana de la Música.jpeg` y `Taller Paraguas Violeta.jpeg`
 
 ## Revisión manual del contenido
 - La imagen «Aproximación al poeta ¿Y si estoy Lorca.jpeg» muestra un folleto de la Ruta Literaria Juan Eslava Galán, no una referencia visual clara a la charla sobre Lorca. Se conserva la asignación por nombre, pero conviene confirmar que el archivo es el previsto.

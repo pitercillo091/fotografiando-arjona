@@ -110,6 +110,16 @@ export const agendaImageAssignments = {
       "originalName": "El eco nazarí la Alhambra como inspiración en el mundo.jpeg"
     }
   ],
+  "arjona-2026-musica-antigua": [
+    {
+      "src": "images/agenda/fotografia-pendiente.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Imagen provisional que indica que el evento todavía no tiene una fotografía específica.",
+      "credit": "Fotografía provisional",
+      "originalName": "Fotografía pendiente.jpeg"
+    }
+  ],
   "arjona-2026-paraguas-violeta": [
     {
       "src": "images/agenda/taller-paraguas-violeta.jpg",
@@ -118,6 +128,36 @@ export const agendaImageAssignments = {
       "alt": "Televisor con una imagen de Fiestasantos sobre un rótulo de Arjona.",
       "credit": "Juan Martínez Gómez",
       "originalName": "Taller Paraguas Violeta.jpeg"
+    }
+  ],
+  "arjona-2026-marcha-25n": [
+    {
+      "src": "images/agenda/fotografia-pendiente.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Imagen provisional que indica que el evento todavía no tiene una fotografía específica.",
+      "credit": "Fotografía provisional",
+      "originalName": "Fotografía pendiente.jpeg"
+    }
+  ],
+  "arjona-2026-acto-25n": [
+    {
+      "src": "images/agenda/fotografia-pendiente.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Imagen provisional que indica que el evento todavía no tiene una fotografía específica.",
+      "credit": "Fotografía provisional",
+      "originalName": "Fotografía pendiente.jpeg"
+    }
+  ],
+  "arjona-2026-mesa-redonda-25n": [
+    {
+      "src": "images/agenda/fotografia-pendiente.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Imagen provisional que indica que el evento todavía no tiene una fotografía específica.",
+      "credit": "Fotografía provisional",
+      "originalName": "Fotografía pendiente.jpeg"
     }
   ],
   "arjona-2026-toro-cana": [

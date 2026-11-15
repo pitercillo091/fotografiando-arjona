@@ -12,6 +12,7 @@ const imageFiles = sourceFiles
   .filter((entry) => entry.isFile() && /\.(jpe?g|jfif|png|webp|avif)$/i.test(entry.name))
   .map((entry) => entry.name)
   .sort((a, b) => a.localeCompare(b, 'es'));
+const pendingFilename = imageFiles.find((filename) => normalizeName(filename) === 'fotografia pendiente');
 
 function normalizeName(value) {
   return value
@@ -49,6 +50,7 @@ const unassignedFiles = [];
 const duplicateFiles = [];
 const manualReview = [];
 const altDescriptions = {
+  'Fotografía pendiente.jpeg': 'Imagen provisional que indica que el evento todavía no tiene una fotografía específica.',
   'Aproximación al poeta ¿Y si estoy Lorca.jpeg': 'Folleto de la Ruta Literaria Juan Eslava Galán, con una imagen del escritor y libros sobre Arjona.',
   'Café literario con José Antonio Lucero.jpeg': 'Dulces decorados en un cuenco sobre una mesa, junto a un folleto.',
   'Concierto de pop-rock.jpeg': 'Rótulo iluminado de Arjona en una ladera al anochecer.',
@@ -76,13 +78,17 @@ for (const filename of imageFiles) {
   previous.push(filename);
   hashes.set(digest, previous);
 }
+
+if (!pendingFilename) {
+  throw new Error('Falta AGENDA/Fotografía pendiente.jpeg para cubrir eventos nuevos sin fotografía.');
+}
 for (const filenames of hashes.values()) {
   if (filenames.length > 1) duplicateFiles.push(filenames);
 }
 for (const filename of imageFiles) {
   const candidates = eventsByName.get(normalizeName(filename)) || [];
   if (candidates.length === 0) {
-    unassignedFiles.push(filename);
+    if (filename !== pendingFilename) unassignedFiles.push(filename);
     continue;
   }
   if (candidates.length > 1) {
@@ -96,22 +102,30 @@ for (const filename of imageFiles) {
 }
 
 await mkdir(outputDirectory, { recursive: true });
+const pendingExtension = path.extname(pendingFilename).toLowerCase().replace('.jpeg', '.jpg').replace('.jfif', '.jpg');
+await copyFile(path.join(sourceDirectory, pendingFilename), path.join(outputDirectory, `fotografia-pendiente${pendingExtension}`));
 const assignments = {};
 for (const event of agendaEvents) {
   const filenames = (imagesByEvent.get(event.id) || []).sort((a, b) => imageOrder(a) - imageOrder(b) || a.localeCompare(b, 'es'));
-  if (!filenames.length) continue;
+  if (!filenames.length) filenames.push(pendingFilename);
   const images = [];
   for (const [index, filename] of filenames.entries()) {
     const extension = path.extname(filename).toLowerCase().replace('.jpeg', '.jpg').replace('.jfif', '.jpg');
-    const outputName = `${slug(event.title)}${index ? `-${index + 1}` : ''}${extension}`;
+    const outputName = filename === pendingFilename
+      ? `fotografia-pendiente${pendingExtension}`
+      : `${slug(event.title)}${index ? `-${index + 1}` : ''}${extension}`;
     const originalPath = path.join(sourceDirectory, filename);
-    await copyFile(originalPath, path.join(outputDirectory, outputName));
+    if (filename !== pendingFilename) await copyFile(originalPath, path.join(outputDirectory, outputName));
     images.push({
       src: `images/agenda/${outputName}`,
       width: null,
       height: null,
       alt: altDescriptions[filename] || `Imagen asociada al evento ${event.title} en Arjona.`,
-      credit: filename === 'XVII Ruta de la Tapa.jfif' ? 'Cartel de la Ruta de la Tapa' : 'Juan Martínez Gómez',
+      credit: filename === pendingFilename
+        ? 'Fotografía provisional'
+        : filename === 'XVII Ruta de la Tapa.jfif'
+          ? 'Cartel de la Ruta de la Tapa'
+          : 'Juan Martínez Gómez',
       originalName: filename
     });
   }
@@ -124,6 +138,8 @@ for (const event of agendaEvents) {
 const assignmentModule = `// Generado por scripts/sync-agenda-images.mjs a partir de AGENDA.\nexport const agendaImageAssignments = ${JSON.stringify(assignments, null, 2)};\n`;
 await writeFile(path.join(root, 'data', 'agenda-images.js'), assignmentModule, 'utf8');
 
+const eventsWithOwnPhoto = agendaEvents.filter((event) => imagesByEvent.has(event.id));
+const eventsWithPendingPhoto = agendaEvents.filter((event) => assignments[event.id]?.some((image) => image.originalName === pendingFilename));
 const unmatchedEvents = agendaEvents.filter((event) => !assignments[event.id]).map((event) => event.title);
 const verifiedOn = new Date().toISOString().slice(0, 10);
 const report = [
@@ -132,13 +148,13 @@ const report = [
   `Última revisión: ${verifiedOn}`,
   `Carpeta revisada: \`AGENDA\` · Archivos de imagen: ${imageFiles.length}`,
   '',
-  '## Eventos con imagen',
-  ...Object.entries(assignments).flatMap(([id, images]) => {
-    const title = agendaEvents.find((event) => event.id === id)?.title || id;
-    return [`- ${title}: ${images.map((image) => `\`${image.originalName}\``).join(', ')}`];
-  }),
+  '## Eventos con fotografía propia',
+  ...(eventsWithOwnPhoto.length ? eventsWithOwnPhoto.flatMap((event) => [`- ${event.title}: ${(imagesByEvent.get(event.id) || []).join(', ')}`]) : ['- Ninguno']),
   '',
-  '## Eventos sin imagen',
+  '## Eventos con fotografía provisional',
+  ...(eventsWithPendingPhoto.length ? eventsWithPendingPhoto.map((event) => `- ${event.title}: \`${pendingFilename}\``) : ['- Ninguno']),
+  '',
+  '## Eventos sin imagen asignada',
   ...(unmatchedEvents.length ? unmatchedEvents.map((title) => `- ${title}`) : ['- Ninguno']),
   '',
   '## Fotografías sin evento',

@@ -92,7 +92,7 @@ export const agendaEvents = [
   {
     id: 'arjona-2027-fiestasantos', title: 'Fiestasantos 2027', dateStart: '2027-08-18', dateEnd: '2027-08-24', time: null, dateLabel: '18–24 de agosto de 2027 · día principal tradicional: 21 de agosto', location: 'Arjona, Jaén', category: 'tradicion', status: 'fecha-tradicional', featured: true,
     description: 'Fiestas patronales de Arjona en honor a San Bonoso y San Maximiano, vinculadas a las Sagradas Reliquias y a una de las tradiciones centrales de la identidad arjonera. El programa detallado de 2027 todavía no se ha publicado.',
-    sourceLabel: 'Jaén Paraíso Interior · Fiestasantos', sourceUrl: 'https://jaenparaisointerior.es/es/w/fiestasantos', lastVerified: '2026-11-04'
+    sourceLabel: 'Jaén Paraíso Interior · Fiestasantos', sourceUrl: 'https://jaenparaisointerior.es/es/w/fiestasantos', lastVerified: '2026-11-15'
   }
 ];
 
