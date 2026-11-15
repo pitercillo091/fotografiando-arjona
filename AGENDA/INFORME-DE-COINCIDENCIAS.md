@@ -1,6 +1,6 @@
 # Revisión de fotografías de Agenda
 
-Carpeta revisada: `AGENDA` · Archivos de imagen: 5
+Carpeta revisada: `AGENDA` · Archivos de imagen: 6
 
 ## Eventos con imagen
 - XVII Ruta de la Tapa: `XVII Ruta de la Tapa.jfif`
@@ -8,6 +8,7 @@ Carpeta revisada: `AGENDA` · Archivos de imagen: 5
 - Olivar, cultura y tradición: `Olivar, cultura y tradición.jpeg`
 - El Toro de Caña: `El Toro de Caña.jpeg`
 - Campaña Fidelidad: entrega de flores de Pascua: `Campaña Fidelidad entrega de flores de Pascua.jpeg`
+- Fiestasantos 2027: `Fiestasantos 2027.jpeg`
 
 ## Eventos sin imagen
 - El Pacto de Jaén: Alhamar y Fernando III
@@ -19,7 +20,6 @@ Carpeta revisada: `AGENDA` · Archivos de imagen: 5
 - Ciencia e innovación en ruta
 - El eco nazarí: la Alhambra como inspiración en el mundo
 - Ciclo de Música Antigua Andrés Vandelvira
-- Fiestasantos 2027
 
 ## Fotografías sin evento
 - Ninguna

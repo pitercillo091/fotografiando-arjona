@@ -47,6 +47,7 @@ const ambiguousFiles = [];
 const unassignedFiles = [];
 const manualReview = [];
 const altDescriptions = {
+  'Fiestasantos 2027.jpeg': 'Figura festiva artesanal de Fiestasantos, con sombrero negro, pañuelo rojo y medalla.',
   'Campaña Fidelidad entrega de flores de Pascua.jpeg': 'Primer plano de flores rojas de la fotografía asociada a la Campaña Fidelidad de Arjona.',
   'El Toro de Caña.jpeg': 'Figura de El Toro de Caña, con máscara de tela, cañas y cencerros.',
   'Olivar, cultura y tradición.jpeg': 'Instalación de ramas de olivo en mosaico junto a una mesa de productos y un cartel de degustación.',
@@ -134,3 +135,4 @@ console.log(JSON.stringify({
   ambiguousFiles,
   manualReview
 }, null, 2));
+

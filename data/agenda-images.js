@@ -49,5 +49,15 @@ export const agendaImageAssignments = {
       "credit": "Juan Martínez Gómez",
       "originalName": "Campaña Fidelidad entrega de flores de Pascua.jpeg"
     }
+  ],
+  "arjona-2027-fiestasantos": [
+    {
+      "src": "images/agenda/fiestasantos.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Figura festiva artesanal de Fiestasantos, con sombrero negro, pañuelo rojo y medalla.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "Fiestasantos 2027.jpeg"
+    }
   ]
 };
