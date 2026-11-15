@@ -60,6 +60,16 @@ export const agendaImageAssignments = {
       "originalName": "Patrimonio artístico-religioso de Arjona.jpeg"
     }
   ],
+  "arjona-2026-semana-musica": [
+    {
+      "src": "images/agenda/semana-de-la-musica.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Televisor con una imagen de Fiestasantos sobre un rótulo de Arjona.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "Semana de la Música.jpeg"
+    }
+  ],
   "arjona-2026-pop-rock": [
     {
       "src": "images/agenda/concierto-de-pop-rock.jpg",
@@ -68,6 +78,16 @@ export const agendaImageAssignments = {
       "alt": "Rótulo iluminado de Arjona en una ladera al anochecer.",
       "credit": "Juan Martínez Gómez",
       "originalName": "Concierto de pop-rock.jpeg"
+    }
+  ],
+  "arjona-2026-ciencia-ruta": [
+    {
+      "src": "images/agenda/ciencia-e-innovacion-en-ruta.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Escudo decorativo con corona, castillo y la inscripción Senatus Urgavonensis.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "Ciencia e innovación en ruta.jpeg"
     }
   ],
   "arjona-2026-olivar-cultura": [
@@ -88,6 +108,16 @@ export const agendaImageAssignments = {
       "alt": "Sillón de madera tallada con motivos ornamentales y decoración de inspiración nazarí.",
       "credit": "Juan Martínez Gómez",
       "originalName": "El eco nazarí la Alhambra como inspiración en el mundo.jpeg"
+    }
+  ],
+  "arjona-2026-paraguas-violeta": [
+    {
+      "src": "images/agenda/taller-paraguas-violeta.jpg",
+      "width": null,
+      "height": null,
+      "alt": "Televisor con una imagen de Fiestasantos sobre un rótulo de Arjona.",
+      "credit": "Juan Martínez Gómez",
+      "originalName": "Taller Paraguas Violeta.jpeg"
     }
   ],
   "arjona-2026-toro-cana": [

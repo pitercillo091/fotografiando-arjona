@@ -1,4 +1,5 @@
 import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { agendaEvents } from '../data/agenda.js';
@@ -45,13 +46,17 @@ for (const event of agendaEvents) {
 const imagesByEvent = new Map();
 const ambiguousFiles = [];
 const unassignedFiles = [];
+const duplicateFiles = [];
 const manualReview = [];
 const altDescriptions = {
   'Aproximación al poeta ¿Y si estoy Lorca.jpeg': 'Folleto de la Ruta Literaria Juan Eslava Galán, con una imagen del escritor y libros sobre Arjona.',
   'Café literario con José Antonio Lucero.jpeg': 'Dulces decorados en un cuenco sobre una mesa, junto a un folleto.',
   'Concierto de pop-rock.jpeg': 'Rótulo iluminado de Arjona en una ladera al anochecer.',
+  'Ciencia e innovación en ruta.jpeg': 'Escudo decorativo con corona, castillo y la inscripción Senatus Urgavonensis.',
   'El Pacto de Jaén Alhamar y Fernando III.jpeg': 'Primer plano de una escultura de rostro barbado frente a un muro de piedra.',
   'El eco nazarí la Alhambra como inspiración en el mundo.jpeg': 'Sillón de madera tallada con motivos ornamentales y decoración de inspiración nazarí.',
+  'Semana de la Música.jpeg': 'Televisor con una imagen de Fiestasantos sobre un rótulo de Arjona.',
+  'Taller Paraguas Violeta.jpeg': 'Televisor con una imagen de Fiestasantos sobre un rótulo de Arjona.',
   'Talleres de creación artística.jpeg': 'Bolsas de tela decoradas con ilustraciones coloridas de Arjona.',
   'Fiestasantos 2027.jpeg': 'Figura festiva artesanal de Fiestasantos, con sombrero negro, pañuelo rojo y medalla.',
   'Campaña Fidelidad entrega de flores de Pascua.jpeg': 'Primer plano de flores rojas de la fotografía asociada a la Campaña Fidelidad de Arjona.',
@@ -62,6 +67,18 @@ const altDescriptions = {
 };
 manualReview.push('La imagen «Aproximación al poeta ¿Y si estoy Lorca.jpeg» muestra un folleto de la Ruta Literaria Juan Eslava Galán, no una referencia visual clara a la charla sobre Lorca. Se conserva la asignación por nombre, pero conviene confirmar que el archivo es el previsto.');
 manualReview.push('La imagen «Café literario con José Antonio Lucero.jpeg» muestra dulces y un folleto, sin identificar visualmente al escritor ni el encuentro. Se conserva la asignación por nombre; confirmar que el archivo es el previsto.');
+manualReview.push('«Ciencia e innovación en ruta.jpeg» muestra un escudo de la Lira Urgavonense y no una actividad científica. Revisar si se guardó con el nombre correcto.');
+manualReview.push('«Semana de la Música.jpeg» y «Taller Paraguas Violeta.jpeg» son archivos idénticos y muestran una pantalla con una imagen de Fiestasantos. Revisar ambos nombres y sus imágenes antes de sustituirlos.');
+const hashes = new Map();
+for (const filename of imageFiles) {
+  const digest = createHash('sha256').update(await readFile(path.join(sourceDirectory, filename))).digest('hex');
+  const previous = hashes.get(digest) || [];
+  previous.push(filename);
+  hashes.set(digest, previous);
+}
+for (const filenames of hashes.values()) {
+  if (filenames.length > 1) duplicateFiles.push(filenames);
+}
 for (const filename of imageFiles) {
   const candidates = eventsByName.get(normalizeName(filename)) || [];
   if (candidates.length === 0) {
@@ -130,6 +147,9 @@ const report = [
   '## Coincidencias ambiguas',
   ...(ambiguousFiles.length ? ambiguousFiles.map((item) => `- \`${item.filename}\`: ${item.events.join(', ')}`) : ['- Ninguna']),
   '',
+  '## Archivos idénticos',
+  ...(duplicateFiles.length ? duplicateFiles.map((files) => `- ${files.map((name) => `\`${name}\``).join(' y ')}`) : ['- Ninguno']),
+  '',
   '## Revisión manual del contenido',
   ...(manualReview.length ? manualReview.map((item) => `- ${item}`) : ['- Ninguna']),
   '',
@@ -143,6 +163,7 @@ console.log(JSON.stringify({
   unmatchedEvents,
   unassignedFiles,
   ambiguousFiles,
+  duplicateFiles,
   manualReview
 }, null, 2));
 
