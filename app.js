@@ -4,6 +4,7 @@ import { agendaEvents } from './data/agenda.js';
 import { agendaImageAssignments } from './data/agenda-images.js';
 import { agendaArchive } from './data/agenda.js';
 import { photoStories } from './data/stories.js';
+import { semanaSantaPhotos } from './data/semana-santa.js';
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const imagePath = (photo) => `images/${photo.file.toLowerCase().endsWith('.avif') ? `optimized/${photo.file.replace(/\.avif$/i, '')}-fallback.jpg` : photo.file}`;
@@ -102,6 +103,7 @@ function openLightbox(photo, title, caption, updateUrl = true) {
 }
 
 function closeLightbox() { const dialog = $('#lightbox'); if (dialog.open) dialog.close(); }
+function syncLightboxScrollLock() { document.body.classList.toggle('lightbox-open', $('#lightbox').open || $('#semana-santa-lightbox').open); }
 function stepPhoto(direction) { const next = (currentPhotoIndex + direction + photos.length) % photos.length; openPhotoAt(next, null, true); }
 
 const dialog = $('#lightbox');
@@ -110,7 +112,7 @@ $('#lightbox-prev').addEventListener('click', () => stepPhoto(-1));
 $('#lightbox-next').addEventListener('click', () => stepPhoto(1));
 $('#share-photo').addEventListener('click', async () => { const button = $('#share-photo'); try { await navigator.clipboard.writeText(location.href); button.textContent = 'Enlace copiado'; } catch { button.textContent = 'Copia la URL del navegador'; } setTimeout(() => { button.textContent = 'Copiar enlace'; }, 1800); });
 dialog.addEventListener('click', (event) => { if (event.target === dialog) closeLightbox(); });
-dialog.addEventListener('close', () => { document.body.classList.remove('lightbox-open'); history.replaceState(null, '', location.pathname + location.search); lastFocus?.focus?.({preventScroll: true}); });
+dialog.addEventListener('close', () => { syncLightboxScrollLock(); history.replaceState(null, '', location.pathname + location.search); lastFocus?.focus?.({preventScroll: true}); });
 dialog.addEventListener('keydown', (event) => { if (event.key === 'ArrowLeft') stepPhoto(-1); if (event.key === 'ArrowRight') stepPhoto(1); });
 let touchStartX = 0;
 $('#lightbox-media').addEventListener('touchstart', (event) => { touchStartX = event.changedTouches[0].clientX; }, {passive: true});
@@ -150,6 +152,81 @@ function renderPhotoStories() {
   container.querySelectorAll('[data-story-photo]').forEach((button) => button.addEventListener('click', () => { const index = photos.findIndex((photo) => photo.id === button.dataset.storyPhoto); openPhotoAt(index, button); }));
 }
 renderPhotoStories();
+
+let santaVisibleCount = 24;
+let santaCurrentIndex = 0;
+let santaLastFocus = null;
+let santaTouchStartX = 0;
+const santaDialog = $('#semana-santa-lightbox');
+const santaLightboxImage = $('#santa-lightbox-image');
+
+function renderSemanaSantaGallery() {
+  const grid = $('#semana-santa-grid');
+  if (!grid) return;
+  const visiblePhotos = semanaSantaPhotos.slice(0, santaVisibleCount);
+  grid.innerHTML = visiblePhotos.map((photo, index) => {
+    const srcset = photo.thumbnailSrc + ' 640w, ' + photo.src + ' ' + photo.width + 'w';
+    const label = photo.title || ('Semana Santa · Fotografía ' + (index + 1));
+    return '<article class="gallery-card semana-santa-card" style="--ratio:' + photo.width + '/' + photo.height + '">' +
+      '<button type="button" data-santa-photo="' + index + '" aria-label="Ampliar ' + photo.alt + '">' +
+      '<figure><img src="' + photo.src + '" srcset="' + srcset + '" sizes="(max-width: 800px) 48vw, (max-width: 1200px) 50vw, 42vw" alt="' + photo.alt + '" width="' + photo.width + '" height="' + photo.height + '" loading="lazy" decoding="async">' +
+      '<figcaption><span>SEMANA SANTA</span>' + label + '</figcaption></figure></button></article>';
+  }).join('');
+  $('#santa-gallery-count').textContent = semanaSantaPhotos.length
+    ? 'Mostrando ' + visiblePhotos.length + ' de ' + semanaSantaPhotos.length + ' fotografías'
+    : 'La carpeta todavía no contiene fotografías compatibles.';
+  $('#semana-santa-more').hidden = visiblePhotos.length >= semanaSantaPhotos.length;
+  grid.querySelectorAll('[data-santa-photo]').forEach((button) => button.addEventListener('click', () => openSantaLightbox(Number(button.dataset.santaPhoto), button)));
+}
+
+function updateSantaLightbox(index) {
+  if (!semanaSantaPhotos.length) return;
+  santaCurrentIndex = (index + semanaSantaPhotos.length) % semanaSantaPhotos.length;
+  const photo = semanaSantaPhotos[santaCurrentIndex];
+  santaLightboxImage.src = photo.src;
+  santaLightboxImage.srcset = photo.thumbnailSrc + ' 640w, ' + photo.src + ' ' + photo.width + 'w';
+  santaLightboxImage.sizes = '92vw';
+  santaLightboxImage.alt = photo.alt;
+  santaLightboxImage.width = photo.width;
+  santaLightboxImage.height = photo.height;
+  $('#santa-lightbox-title').textContent = photo.title;
+  $('#santa-lightbox-caption').textContent = 'Fotografía ' + (santaCurrentIndex + 1) + ' de ' + semanaSantaPhotos.length + ' · Semana Santa en Arjona.';
+}
+
+function openSantaLightbox(index, focusTarget = null) {
+  santaLastFocus = focusTarget || document.activeElement;
+  updateSantaLightbox(index);
+  santaDialog.showModal();
+  syncLightboxScrollLock();
+  $('#close-santa-lightbox').focus();
+}
+
+function closeSantaLightbox() {
+  if (santaDialog.open) santaDialog.close();
+}
+
+$('#semana-santa-more').addEventListener('click', () => {
+  santaVisibleCount += 24;
+  renderSemanaSantaGallery();
+});
+$('#close-santa-lightbox').addEventListener('click', closeSantaLightbox);
+$('#santa-lightbox-prev').addEventListener('click', () => updateSantaLightbox(santaCurrentIndex - 1));
+$('#santa-lightbox-next').addEventListener('click', () => updateSantaLightbox(santaCurrentIndex + 1));
+santaDialog.addEventListener('close', () => {
+  syncLightboxScrollLock();
+  santaLastFocus?.focus?.({preventScroll: true});
+});
+santaDialog.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowLeft') updateSantaLightbox(santaCurrentIndex - 1);
+  if (event.key === 'ArrowRight') updateSantaLightbox(santaCurrentIndex + 1);
+});
+$('#santa-lightbox-media').addEventListener('touchstart', (event) => { santaTouchStartX = event.changedTouches[0].clientX; }, {passive: true});
+$('#santa-lightbox-media').addEventListener('touchend', (event) => {
+  const delta = event.changedTouches[0].clientX - santaTouchStartX;
+  if (Math.abs(delta) > 50) updateSantaLightbox(santaCurrentIndex + (delta < 0 ? 1 : -1));
+}, {passive: true});
+renderSemanaSantaGallery();
+
 const hashPhoto = location.hash.startsWith('#foto=') ? location.hash.slice(6) : '';
 if (hashPhoto) { const index = photos.findIndex((photo) => photo.id === hashPhoto); if (index >= 0) openPhotoAt(index, null, false); }
 

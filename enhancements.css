@@ -60,3 +60,15 @@ html{scroll-behavior:auto}
 .music-toggle{position:fixed;right:22px;bottom:20px;z-index:15;padding:10px 14px;border:1px solid var(--line);background:rgba(13,23,21,.92);color:var(--paper);font:12px/1.2 var(--sans);cursor:pointer}.music-toggle:hover,.music-toggle:focus-visible{border-color:var(--gold);color:var(--bright)}@media(max-width:800px){.music-toggle{right:12px;bottom:12px;min-height:44px}}
 
 .agenda-media-frame{display:flex;flex:1;flex-direction:column;min-height:100%}.agenda-media-frame img{flex:1;min-height:170px;object-fit:cover}.agenda-image-credit{padding:8px 10px;color:var(--muted);font-size:9px;line-height:1.4;text-decoration:none;border-top:1px solid var(--line)}.agenda-image-credit:hover,.agenda-image-credit:focus-visible{color:var(--bright)}.agenda-art span{margin-top:12px;color:var(--muted);font:10px/1.4 var(--sans);letter-spacing:.4px}@media(max-width:800px){.agenda-media-frame{min-height:220px}.agenda-media-frame img{height:220px;min-height:220px;flex:0 0 220px}}
+
+.bento-santa-link{grid-column:2/4;min-height:145px;flex-direction:row;align-items:end;justify-content:space-between;gap:28px;background:linear-gradient(115deg,rgba(209,172,124,.15),rgba(13,23,21,.2))}
+.bento-santa-link strong{font-size:clamp(24px,3vw,38px)}
+.semana-santa-section{padding:125px 7.5% 115px;background:var(--deep);border-top:1px solid var(--line)}
+.santa-gallery-count{margin:35px 0 18px;color:var(--muted);font-size:11px}
+.semana-santa-grid{margin-top:0}
+.semana-santa-card button{height:100%}
+.semana-santa-card figure{height:100%}
+.semana-santa-lightbox .lightbox-media{height:min(70vh,760px)}
+.semana-santa-lightbox .lightbox-media img{width:100%;height:100%;object-fit:contain}
+@media(max-width:800px){.bento-santa-link{grid-column:1/-1;min-height:125px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:8px}.semana-santa-section{padding:90px 6% 100px}.santa-gallery-count{margin:28px 0 14px}.semana-santa-lightbox .lightbox-media{height:60vh}}
+@media(prefers-reduced-motion:reduce){.bento-santa-link,.semana-santa-card img{transition:none}}

@@ -29,6 +29,12 @@ El flujo de GitHub Actions prepara una copia estática en `_site`; las fotos ori
 
 Las imágenes deben tener un texto alternativo objetivo. No asignes años ni lugares concretos si no están confirmados. La portada se define en `enhancements.css` y en los metadatos de `index.html`.
 
+## Galería de Semana Santa
+
+Las fotografías originales de esta galería se guardan en la carpeta SEMANA SANTA. Para añadir imágenes, copia allí los archivos sin renombrar ni sobrescribir los originales. Al ejecutar npm run build, el importador vuelve a leer la carpeta, genera miniaturas, actualiza data/semana-santa.js y prepara _site. GitHub Pages ejecuta el mismo proceso al publicar cada actualización de main.
+
+Para que las fotografías nuevas aparezcan online, añade los archivos nuevos de SEMANA SANTA al repositorio y súbelos a main. Los formatos admitidos son JPG/JPEG, PNG, WebP y AVIF. El importador necesita ffmpeg y ffprobe. Los textos alternativos son neutrales mientras el motivo concreto de cada fotografía no se haya identificado y revisado.
+
 ## Juego de observación
 
 Las preguntas están en `data/quiz.js`. Cada entrada necesita:

@@ -54,6 +54,14 @@
       <a class="bento-card" href="#galeria" data-filter-link="patrimonio"><span class="bento-kicker">02 · FORMATO</span><strong>Encuadres verticales</strong><span>Explorar fotografías verticales.</span></a>
       <a class="bento-card" href="#galeria" data-filter-link="detalles"><span class="bento-kicker">03 · FORMATO</span><strong>Formato cuadrado</strong><span>Explorar fotografías cuadradas.</span></a>
       <div class="bento-card bento-note"><span class="bento-kicker">04 · AUTOR</span><strong>Juan Martínez Gómez</strong><span>Una colección personal, ampliable y revisable.</span></div>
+      <a class="bento-card bento-santa-link" href="#semana-santa"><span class="bento-kicker">GALERÍA TEMÁTICA</span><strong>Semana Santa</strong><span>Una mirada fotográfica a la tradición de Arjona. <span aria-hidden="true">↘</span></span></a>
+    </section>
+
+    <section class="semana-santa-section reveal" id="semana-santa" aria-labelledby="semana-santa-title">
+      <div class="section-heading"><div><p class="eyebrow">GALERÍA TEMÁTICA · ARJONA</p><h2 id="semana-santa-title">Semana Santa.</h2></div><p class="section-description">Imágenes de Semana Santa en Arjona: un recorrido por sus escenas, sus calles y los momentos que forman parte de la tradición. La galería se ampliará al incorporar nuevas fotografías a su carpeta.</p></div>
+      <p class="santa-gallery-count" id="santa-gallery-count" aria-live="polite"></p>
+      <div class="gallery-grid semana-santa-grid" id="semana-santa-grid" aria-label="Fotografías de Semana Santa en Arjona"></div>
+      <button class="gallery-more" id="semana-santa-more" type="button">Mostrar más fotografías</button>
     </section>
 
     <section class="story" aria-label="Recorrido fotográfico">
@@ -144,6 +152,11 @@
   <audio id="site-music" src="audio/where_mountains_bow.mp3" autoplay loop preload="none"></audio>
   <button id="music-toggle" class="music-toggle" type="button" aria-pressed="false" aria-label="Silenciar música">Silenciar música</button>
   <dialog id="lightbox" aria-labelledby="lightbox-title"><button class="close-lightbox" id="close-lightbox" aria-label="Cerrar fotografía">×</button><div class="lightbox-media" id="lightbox-media"><picture id="lightbox-picture"><img id="lightbox-image" alt=""></picture><button class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button" aria-label="Fotografía anterior">←</button><button class="lightbox-nav lightbox-next" id="lightbox-next" type="button" aria-label="Fotografía siguiente">→</button></div><div class="lightbox-meta"><p class="eyebrow" id="lightbox-category"></p><h2 id="lightbox-title"></h2><p id="lightbox-caption"></p><div class="lightbox-actions"><p class="credit">Fotografía: Juan Martínez Gómez · Arjona, Jaén</p><button class="share-button" id="share-photo" type="button">Copiar enlace</button></div></div></dialog>
+  <dialog id="semana-santa-lightbox" class="semana-santa-lightbox" aria-labelledby="santa-lightbox-title">
+    <button class="close-lightbox" id="close-santa-lightbox" type="button" aria-label="Cerrar fotografía">×</button>
+    <div class="lightbox-media" id="santa-lightbox-media"><img id="santa-lightbox-image" alt=""><button class="lightbox-nav lightbox-prev" id="santa-lightbox-prev" type="button" aria-label="Fotografía anterior">←</button><button class="lightbox-nav lightbox-next" id="santa-lightbox-next" type="button" aria-label="Fotografía siguiente">→</button></div>
+    <div class="lightbox-meta"><p class="eyebrow">SEMANA SANTA · ARJONA</p><h2 id="santa-lightbox-title"></h2><p id="santa-lightbox-caption"></p><p class="credit">Fotografía: Juan Martínez Gómez · Arjona, Jaén</p></div>
+  </dialog>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"ImageGallery","name":"Fotografiando Arjona","description":"Galería fotográfica de Arjona por Juan Martínez Gómez.","creator":{"@type":"Person","name":"Juan Martínez Gómez"},"contentLocation":{"@type":"Place","name":"Arjona","address":{"@type":"PostalAddress","addressLocality":"Arjona","addressRegion":"Jaén","addressCountry":"ES"}}}</script>
 </body>
 </html>

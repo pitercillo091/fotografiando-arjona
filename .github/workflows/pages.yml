@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Descargar el repositorio
         uses: actions/checkout@v6
+      - name: Instalar herramientas de imágenes
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Preparar GitHub Pages
         uses: actions/configure-pages@v5
       - name: Preparar la web

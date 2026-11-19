@@ -3,6 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "scripts": {"start": "node scripts/serve.mjs", "sync-agenda-images": "node scripts/sync-agenda-images.mjs", "check": "node --check app.js && node --check data/photos.js && node --check data/quiz.js && node --check data/agenda.js && node --check data/agenda-images.js && node --check data/stories.js"},
+  "scripts": {"start": "node scripts/serve.mjs", "build": "node scripts/build-pages.mjs", "import-semana-santa": "node scripts/import-semana-santa.mjs", "sync-agenda-images": "node scripts/sync-agenda-images.mjs", "check": "node --check app.js && node --check data/photos.js && node --check data/quiz.js && node --check data/agenda.js && node --check data/agenda-images.js && node --check data/stories.js && node --check data/semana-santa.js && node --check scripts/import-semana-santa.mjs"},
   "engines": {"node": ">=20"}
 }
